@@ -1,0 +1,89 @@
+.home-container{
+    background-image: url(src/assets/main/quote-bg.svg) ;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.home-details{
+    width: 60%;
+}
+.home-details-view{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    .home-details-like-comment{
+        width: 30%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+   
+    .home-details-like {
+        width: 60%;
+        height: 30px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        border: 1px solid rgb(0, 255, 255) ;
+        color: rgb(0, 255, 255);
+        cursor: pointer;
+    }
+    .home-details-comment, .home-details-share{
+        width: 30%;
+        height: 30px;
+        background-color: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        border: 1px solid rgb(0, 255, 255) ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(0, 255, 255);
+    }
+    .home-details-share{
+        width: 8%;
+    }
+ 
+}
+.home-details-signin{
+    padding: 20px;
+}
+.border{
+    border: 2px solid black;
+}
+.show-icon{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    align-items: center;
+    text-align: center;
+}
+.home-details-signup{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .home-details-signup-request{
+        color: cyan;
+        padding: 10px;
+    }
+    .home-details-signup-btn{
+        color: cyan;
+        padding: 10px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
