@@ -17,7 +17,7 @@ const Quote = ({details,style}) => {
                 )
             )
         }
-        <div className='quote-next'><FaCaretRight /></div>
+        <div className='quote-next' style={style}><FaCaretRight /></div>
         
     </div>
   )
