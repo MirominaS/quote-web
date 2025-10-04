@@ -1,24 +1,11 @@
 .quote-container{
     height: 100%;
-    width: 100%;
+    width: 100vw;
     display: flex;
     justify-content: space-around;
     align-items: center;
     /* border: 1px solid black; */
-    .quote-prev, .quote-next{
-        width: 5%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 58px;
-        color: rgb(122,30,48,0.2);
-    }
 
-    .quote-prev:hover, .quote-next:hover{
-        background-color: rgba(0, 0, 0, 0.1);
-        color: rgb(122,30,48);
-    }
         
     .quote-detail{
         width: 90%;
