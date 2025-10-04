@@ -1,89 +1,135 @@
 .home-container{
-    background-image: url(src/assets/main/quote-bg.svg) ;
-    background-repeat: no-repeat;
-    background-size: 100%;
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content:space-between;
     align-items: center;
-    
-}
-.home-details{
-    width: 60%;
-}
-.home-details-view{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    .home-details-like-comment{
-        width: 30%;
+    background-color: #e6d084;
+
+    .home-quote{        
+        width: 100vw;
+        height: 85%;
+        display: flex;  
+        justify-content: space-around;
+        align-items: center;
+
+        .home-quote-prev, .home-quote-next{
+             width: 5vw;
+             height: 100%;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             font-size: 58px;
+             color: rgb(122,30,48,0.2);
+        }
+
+        .home-quote-prev:hover, .home-quote-next:hover{
+            background-color: rgba(0, 0, 0, 0.1);
+            color: rgb(122,30,48);
+        }     
+    }
+
+    .home-footer{
+        width: 100%;
+        height: 15%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .home-footer-vote-comment{
+            width: 20%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+
+            .home-footer-vote{
+                width: 60%;
+                height: 60%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                font-size: larger;
+                border-radius: 10px;
+                margin-left: 10px;
+            }
+
+            .home-footer-comment{
+                width: 30%;
+                height: 60%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: larger;
+                border-radius: 10px;
+            }            
+        }
+
+        .home-footer-signup{
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: small;
+            color: rgb(122,30,48);
+
+            .home-footer-signup-btn{
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .home-footer-signup-btn:hover{
+                text-shadow: 2px px 10px rgb(122,30,48);
+                font-size: x-large;
+            }
+        }
+
+        .home-footer-download{
+            width: 5%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: larger;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .home-footer-vote, .home-footer-comment, .home-footer-download,.home-footer-color-background,.home-footer-color-text{
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 1px solid #000000;
+            box-shadow: 2px 2px 10px rgb(0, 0, 0);
+            border-radius: 10px;
+            color: rgb(122,30,48);
+            cursor: pointer;
+
+        }
+
+        .home-footer-color{
+            width: 18%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            .home-footer-color-background, .home-footer-color-text{
+                /* background-color: blueviolet; */
+                width: 20%;
+                height: 40% ;
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 20px;
+            }
+        }
     }
-   
-    .home-details-like {
-        width: 60%;
-        height: 30px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        border-radius: 10px;
-        border: 1px solid rgb(0, 255, 255) ;
-        color: rgb(0, 255, 255);
-        cursor: pointer;
-    }
-    .home-details-comment, .home-details-share{
-        width: 30%;
-        height: 30px;
-        background-color: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        border-radius: 10px;
-        border: 1px solid rgb(0, 255, 255) ;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: rgb(0, 255, 255);
-    }
-    .home-details-share{
-        width: 8%;
-    }
- 
 }
-.home-details-signin{
-    padding: 20px;
-}
-.border{
-    border: 2px solid black;
-}
-.show-icon{
-    width: 50%;
+.icon{
     display: flex;
-    justify-content: center;
-    gap: 10%;
     align-items: center;
-    text-align: center;
-}
-.home-details-signup{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .home-details-signup-request{
-        color: cyan;
-        padding: 10px;
-    }
-    .home-details-signup-btn{
-        color: cyan;
-        padding: 10px;
-        text-decoration: underline;
-        cursor: pointer;
-    }
+    gap: 10px;    
 }
