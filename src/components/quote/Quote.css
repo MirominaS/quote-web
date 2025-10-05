@@ -4,25 +4,22 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* border: 1px solid black; */
-
-        
+           
     .quote-detail{
         width: 90%;
         height: 60%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        align-items: center;
-        padding: 20px;
-        /* background-color: lightgray; */
+        padding: 20px;        
 
         .quote-detail-tag{
-            width: 90%;
+            width: 12%;
+            text-align: center;
             color: rgb(122,30,48);
             font-size: large;
             font-style: oblique;
-            text-align: start;
+            border-radius: 5px;
         }
 
         .quote-detail-quote{
@@ -31,7 +28,7 @@
             text-align: center;
         }
         .quote-detail-by{
-            width: 80%;
+            width: 90%;
             color: rgb(122,30,48);
             text-align: end;
             font-size: 22px;
