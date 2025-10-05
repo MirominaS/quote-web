@@ -6,9 +6,10 @@ import { ChromePicker } from 'react-color';
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
 import './Home.css'
-import html2canvas from 'html2canvas';
+
 import Vote from '../../components/vote/Vote';
 import CommentQuote from '../../components/commentQuote/CommentQuote';
+import DownloadImage from '../../components/downloadImage/DownloadImage';
 
 const Home = () => {
   const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
@@ -60,16 +61,7 @@ const Home = () => {
       setActiveIndex(activeIndex === quoteDetails.length - 1 ? 0 : activeIndex + 1)
     }
 
-    const handleDownloadImage = async () => {
-       const canvas = await html2canvas(printRef.current,{allowTaint:true});
-       const dataURL = canvas.toDataURL("image/png");
-
-       const link = document.createElement('a');
-       link.href = dataURL;
-       link.download = "image.png";
-       link.click();
-    };
-
+ 
    const styles = {
     popover: {
       position: 'absolute',
@@ -121,10 +113,7 @@ const Home = () => {
                   />
               )
             )}
-          {/* <div className='home-footer-comment icon' >
-            <FaComment />
-            {"250"}
-          </div> */}
+
            {quoteDetails
             .map((quoteDetail,index) => (
               index === activeIndex &&
@@ -140,7 +129,12 @@ const Home = () => {
           <h2 className='home-footer-signup-request'>Would you like to write your own?</h2>
           <h2 className='home-footer-signup-btn'>Sign up</h2>
         </div>
-        <div className='home-footer-color'>
+        <div className='home-footer-download-color'>
+           {/* <div className='home-footer-download icon' onClick={handleDownloadImage}><FaDownload /></div> */}
+           <DownloadImage printRef={printRef}/>
+           <div className='home-footer-color'>
+        </div>
+        
           <div className='home-footer-color-background' style={{background:`${bgcolor}`}} onClick={handleBgColorClick}>
             {displayBgColorPicker ?
               <div style={styles.popover}>
@@ -158,7 +152,7 @@ const Home = () => {
               
           </div>{mainColor}
         </div>
-        <div className='home-footer-download icon' onClick={handleDownloadImage}><FaDownload /></div>
+        
       </div>
 
     </div>

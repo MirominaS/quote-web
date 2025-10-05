@@ -37,14 +37,14 @@
         justify-content: space-between; 
         align-items: center;
 
-        .home-footer-vote-comment{
-            width: 25%;
+        .home-footer-vote-comment, .home-footer-download-color{
+            width: 30%;
             height: 100%;
-            background-color: blueviolet;
             display: flex;
             justify-content: center;
             gap: 10px;
-            align-items: center;            
+            align-items: center;  
+            background-color: aqua;          
         }
 
         .home-footer-signup{
@@ -66,18 +66,7 @@
                 font-size: x-large;
             }
         }
-
-        .home-footer-download{
-            width: 5%;
-            height: 60%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: larger;
-            border-radius: 10px;
-            margin-right: 10px;
-        }
-
+        
         .home-footer-vote, .home-footer-comment, .home-footer-download,.home-footer-color-background,.home-footer-color-text{
             background-color: rgba(255, 255, 255);
             box-shadow: 0 0 10px rgb(0, 0, 0);
