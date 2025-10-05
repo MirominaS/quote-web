@@ -1,162 +1,180 @@
-import React, { useRef, useState } from 'react'
-import Quote from '../../components/quote/Quote'
-import { FaComment } from "react-icons/fa6";
-import { FaDownload } from "react-icons/fa";
-import { ChromePicker } from 'react-color';
+import React, { useRef, useState } from "react";
+import Quote from "../../components/quote/Quote";
+import { ChromePicker } from "react-color";
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
-import './Home.css'
+import "./Home.css";
 
-import Vote from '../../components/vote/Vote';
-import CommentQuote from '../../components/commentQuote/CommentQuote';
-import DownloadImage from '../../components/downloadImage/DownloadImage';
+import Vote from "../../components/vote/Vote";
+import CommentQuote from "../../components/commentQuote/CommentQuote";
+import DownloadImage from "../../components/downloadImage/DownloadImage";
+import ColorPicker from "../../components/colorPicker/ColorPicker";
 
 const Home = () => {
-  const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
-  const [bgcolor, setBgColor] = useState('#e6d084');
-  const [displayMainColorPicker , setDisplayMainColorPicker] = useState(false);
-  const [mainColor, setMainColor] = useState('#7a1e30');
   const [activeIndex, setActiveIndex] = useState(0);
-  
+  const [getBgColor, setGetBgColor] = useState("");
+  const [getTextColor, setGetTextColor] = useState("");
+
   const printRef = useRef();
 
   const quoteDetails = [
-    {id: 0,tag:"#Success", quote:"Success is not final, failure is not fatal: it is the courage to continue that counts", by:"Winston Churchill",status:1, upvote:25,downvote:10,commentCount:15},
-    {id: 1,tag:"#Motivation", quote:"Do what you can, with what you have, where you are.", by:"Theodore Roosevelt",status:-1,upvote:5,downvote:1,commentCount:25},
-    {id: 2,tag:"#Productivity", quote:"Don't count the days, make the days count.", by:"Muhammad Ali",status:0,upvote:29,downvote:2,commentCount:145},
-    {id: 3,tag:"#Confidence",  quote:"Doubt kills more dreams than failure ever will.", by:"Suzy Kassem",status:-1,upvote:48,downvote:3,commentCount:20}
+    {
+      id: 0,
+      tag: "#Success",
+      quote:
+        "Success is not final, failure is not fatal: it is the courage to continue that counts",
+      by: "Winston Churchill",
+      status: 1,
+      upvote: 25,
+      downvote: 10,
+      commentCount: 15,
+    },
+    {
+      id: 1,
+      tag: "#Motivation",
+      quote: "Do what you can, with what you have, where you are.",
+      by: "Theodore Roosevelt",
+      status: -1,
+      upvote: 5,
+      downvote: 1,
+      commentCount: 25,
+    },
+    {
+      id: 2,
+      tag: "#Productivity",
+      quote: "Don't count the days, make the days count.",
+      by: "Muhammad Ali",
+      status: 0,
+      upvote: 29,
+      downvote: 2,
+      commentCount: 145,
+    },
+    {
+      id: 3,
+      tag: "#Confidence",
+      quote: "Doubt kills more dreams than failure ever will.",
+      by: "Suzy Kassem",
+      status: -1,
+      upvote: 48,
+      downvote: 3,
+      commentCount: 20,
+    },
   ];
 
-    const handleBgColorClick = () => {
-      setDisplayBgColorPicker(!displayBgColorPicker);
-    }
-
-    const handleBgColorClose = () => {
-      setDisplayBgColorPicker(false);
-    }
-
-    const handleBgColorChange = (bgcolor) => {
-      setBgColor(bgcolor.hex);
-    }
-
-    const handleMainColorClick = () => {
-      setDisplayMainColorPicker(!displayMainColorPicker);
-    }
-
-    const handleMainColorClose = () => {
-      setDisplayMainColorPicker(false);
-    }
-
-    const handleMainColorChange = (mainColor) => {
-      setMainColor(mainColor.hex);
-    }
-
-    const handlePrev = () => {
-      console.log("prev")
-      setActiveIndex(activeIndex === 0 ? quoteDetails.length - 1 : activeIndex - 1)
-    }
-
-    const handleNext = () => {
-      console.log("next")
-      setActiveIndex(activeIndex === quoteDetails.length - 1 ? 0 : activeIndex + 1)
-    }
-
  
-   const styles = {
+
+  const handleGetBgColor = (color) => {
+    setGetBgColor(color);
+  }
+
+
+  const handleTextColor = (color) => {
+    setGetTextColor(color)
+  }
+
+  const handlePrev = () => {
+    console.log("prev");
+    setActiveIndex(
+      activeIndex === 0 ? quoteDetails.length - 1 : activeIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    console.log("next");
+    setActiveIndex(
+      activeIndex === quoteDetails.length - 1 ? 0 : activeIndex + 1
+    );
+  };
+
+  const styles = {
     popover: {
-      position: 'absolute',
-      zIndex: '2',
-      bottom:0,
+      position: "absolute",
+      zIndex: "2",
+      bottom: 0,
     },
     cover: {
-      position: 'fixed',
-      bottom:0,
-      top:0,
-      left:0,
-      right:0,
+      position: "fixed",
+      bottom: 0,
+      top: 0,
+      left: 0,
+      right: 0,
     },
-   }
+  };
 
   return (
-    <div className='home-container' style={{backgroundColor:`${bgcolor}`}}>
-      
-    
-      <div className='home-quote'>
-        <div className='home-quote-prev' style={{color: `${mainColor}`}} onClick={handlePrev} ><FaCaretLeft /></div>    
-        {quoteDetails
-          .map((quoteDetail,index) => (
-               index === activeIndex &&
-                <Quote
-                  ref = {printRef}
-                  style={{color:`${mainColor}`,backgroundColor:`${bgcolor}`}}
-                  key={quoteDetail.id}
-                  tag={quoteDetail.tag}
-                  quote={quoteDetail.quote}
-                  by={quoteDetail.by}
-                />
-        ))       
-        }
-        
-        {/* <Quote details={quoteDetails} style={{color: `${mainColor}`}} */}
-        <div className='home-quote-next' style={{color: `${mainColor}`}} onClick={handleNext}><FaCaretRight /></div>
+    <div className="home-container" style={{ backgroundColor: `${getBgColor}` }}>
+      <div className="home-quote">
+        <div
+          className="home-quote-prev"
+          style={{ color: `${getTextColor}` }}
+          onClick={handlePrev}
+        >
+          <FaCaretLeft />
+        </div>
+        {quoteDetails.map(
+          (quoteDetail, index) =>
+            index === activeIndex && (
+              <Quote
+                ref={printRef}
+                style={{ color: `${getTextColor}`, backgroundColor: `${getBgColor}` }}
+                key={quoteDetail.id}
+                tag={quoteDetail.tag}
+                quote={quoteDetail.quote}
+                by={quoteDetail.by}
+              />
+            )
+        )}
+
+        <div
+          className="home-quote-next"
+          style={{ color: `${getTextColor}` }}
+          onClick={handleNext}
+        >
+          <FaCaretRight />
+        </div>
       </div>
-       
-      <div className='home-footer' style={{color: `${mainColor}`}}>
-        <div className='home-footer-vote-comment'>
-            {quoteDetails
-            .map((quoteDetail,index) => (
-              index === activeIndex &&
-                <Vote key={quoteDetail.id}
+
+      <div className="home-footer" style={{ color: `${getTextColor}` }}>
+        <div className="home-footer-vote-comment">
+          {quoteDetails.map(
+            (quoteDetail, index) =>
+              index === activeIndex && (
+                <Vote
+                  key={quoteDetail.id}
                   status={quoteDetail.status}
                   upcount={quoteDetail.upvote}
                   downcount={quoteDetail.downvote}
-                  />
+                />
               )
-            )}
+          )}
 
-           {quoteDetails
-            .map((quoteDetail,index) => (
-              index === activeIndex &&
-                <CommentQuote 
+          {quoteDetails.map(
+            (quoteDetail, index) =>
+              index === activeIndex && (
+                <CommentQuote
                   key={quoteDetail.id}
                   count={quoteDetail.commentCount}
                 />
               )
-            )}
-          
+          )}
         </div>
-        <div className='home-footer-signup' style={{color: `${mainColor}`}}>
-          <h2 className='home-footer-signup-request'>Would you like to write your own?</h2>
-          <h2 className='home-footer-signup-btn'>Sign up</h2>
+        <div className="home-footer-signup" >
+          <h2 className="home-footer-signup-request">
+            Would you like to write your own?
+          </h2>
+          <h2 className="home-footer-signup-btn">Sign up</h2>
         </div>
-        <div className='home-footer-download-color'>
-           {/* <div className='home-footer-download icon' onClick={handleDownloadImage}><FaDownload /></div> */}
-           <DownloadImage printRef={printRef}/>
-           <div className='home-footer-color'>
+
+        <div className="home-footer-download-color">
+          <DownloadImage printRef={printRef} />
+          <div className="color-picker">
+            <ColorPicker sendColor = {handleGetBgColor} initialColor="#e6d084"/>
+            <ColorPicker sendColor={handleTextColor} initialColor="#7a1e30"/>
+          </div>
         </div>
-        
-          <div className='home-footer-color-background' style={{background:`${bgcolor}`}} onClick={handleBgColorClick}>
-            {displayBgColorPicker ?
-              <div style={styles.popover}>
-              <div style={styles.cover} onClick={handleBgColorClose}/>
-              <ChromePicker color={bgcolor} onChange={handleBgColorChange}/>
-              </div> : null} 
-             
-          </div> {bgcolor}
-          <div className='home-footer-color-text' style={{backgroundColor: `${mainColor}`}} onClick={handleMainColorClick}>
-              {displayMainColorPicker ?
-              <div style={styles.popover}>
-              <div style={styles.cover} onClick={handleMainColorClose}/>
-              <ChromePicker color={mainColor} onChange={handleMainColorChange}/>
-              </div> : null} 
-              
-          </div>{mainColor}
-        </div>
-        
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
