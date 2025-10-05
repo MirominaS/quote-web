@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import Quote from "../../components/quote/Quote";
-import { ChromePicker } from "react-color";
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
 import "./Home.css";
@@ -86,29 +85,10 @@ const Home = () => {
     );
   };
 
-  const styles = {
-    popover: {
-      position: "absolute",
-      zIndex: "2",
-      bottom: 0,
-    },
-    cover: {
-      position: "fixed",
-      bottom: 0,
-      top: 0,
-      left: 0,
-      right: 0,
-    },
-  };
-
   return (
     <div className="home-container" style={{ backgroundColor: `${getBgColor}` }}>
       <div className="home-quote">
-        <div
-          className="home-quote-prev"
-          style={{ color: `${getTextColor}` }}
-          onClick={handlePrev}
-        >
+        <div className="home-quote-prev" onClick={handlePrev}>
           <FaCaretLeft />
         </div>
         {quoteDetails.map(
@@ -125,11 +105,7 @@ const Home = () => {
             )
         )}
 
-        <div
-          className="home-quote-next"
-          style={{ color: `${getTextColor}` }}
-          onClick={handleNext}
-        >
+        <div className="home-quote-next" onClick={handleNext}>
           <FaCaretRight />
         </div>
       </div>

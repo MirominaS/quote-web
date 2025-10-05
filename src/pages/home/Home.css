@@ -21,12 +21,12 @@
              justify-content: center;
              align-items: center;
              font-size: 58px;
-             color: rgb(122,30,48,0.2);
+             color: rgba(0, 0, 0, 0.2);
         }
 
         .home-quote-prev:hover, .home-quote-next:hover{
             background-color: rgba(0, 0, 0, 0.1);
-            color: rgb(122,30,48);
+            color: rgb(0, 0, 0);
         }     
     }
 
@@ -68,7 +68,7 @@
             align-items: center;
             gap: 10px;
             font-size: small;
-            color: rgb(122,30,48);
+            color: rgb(0, 0, 0);
 
             .home-footer-signup-btn{
                 text-decoration: underline;
@@ -77,7 +77,8 @@
 
             .home-footer-signup-btn:hover{
                 text-shadow: 2px px 10px rgb(122,30,48);
-                font-size: x-large;
+                transform: scale(1.2);
+                transition-duration: 0.3s ;
             }
         }
 
