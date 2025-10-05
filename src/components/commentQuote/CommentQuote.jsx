@@ -1,9 +1,13 @@
 import React from 'react'
 import './CommentQuote.css'
+import { FaComment } from "react-icons/fa6";
 
-const CommentQuote = () => {
+const CommentQuote = ({count}) => {
   return (
-    <div>CommentQuote</div>
+    <div className='comment-container'>
+        <FaComment />
+        {count}
+    </div>
   )
 }
 

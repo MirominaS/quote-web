@@ -1,10 +1,6 @@
 import React, { useRef, useState } from 'react'
 import Quote from '../../components/quote/Quote'
-import { FaCircleUp } from "react-icons/fa6";
-import { FaCircleDown } from "react-icons/fa6";
 import { FaComment } from "react-icons/fa6";
-import { FaRegArrowAltCircleUp } from "react-icons/fa";
-import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
 import { ChromePicker } from 'react-color';
 import { FaCaretLeft } from "react-icons/fa6";
@@ -12,6 +8,7 @@ import { FaCaretRight } from "react-icons/fa";
 import './Home.css'
 import html2canvas from 'html2canvas';
 import Vote from '../../components/vote/Vote';
+import CommentQuote from '../../components/commentQuote/CommentQuote';
 
 const Home = () => {
   const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
@@ -23,10 +20,10 @@ const Home = () => {
   const printRef = useRef();
 
   const quoteDetails = [
-    {id: 0,tag:"#Success", quote:"Success is not final, failure is not fatal: it is the courage to continue that counts", by:"Winston Churchill",status:1, upvote:25,downvote:10},
-    {id: 1,tag:"#Motivation", quote:"Do what you can, with what you have, where you are.", by:"Theodore Roosevelt",status:-1,upvote:5,downvote:1},
-    {id: 2,tag:"#Productivity", quote:"Don't count the days, make the days count.", by:"Muhammad Ali",status:0,upvote:29,downvote:2},
-    {id: 3,tag:"#Confidence",  quote:"Doubt kills more dreams than failure ever will.", by:"Suzy Kassem",status:-1,upvote:48,downvote:3}
+    {id: 0,tag:"#Success", quote:"Success is not final, failure is not fatal: it is the courage to continue that counts", by:"Winston Churchill",status:1, upvote:25,downvote:10,commentCount:15},
+    {id: 1,tag:"#Motivation", quote:"Do what you can, with what you have, where you are.", by:"Theodore Roosevelt",status:-1,upvote:5,downvote:1,commentCount:25},
+    {id: 2,tag:"#Productivity", quote:"Don't count the days, make the days count.", by:"Muhammad Ali",status:0,upvote:29,downvote:2,commentCount:145},
+    {id: 3,tag:"#Confidence",  quote:"Doubt kills more dreams than failure ever will.", by:"Suzy Kassem",status:-1,upvote:48,downvote:3,commentCount:20}
   ];
 
     const handleBgColorClick = () => {
@@ -124,10 +121,20 @@ const Home = () => {
                   />
               )
             )}
-          <div className='home-footer-comment icon' >
+          {/* <div className='home-footer-comment icon' >
             <FaComment />
             {"250"}
-          </div>
+          </div> */}
+           {quoteDetails
+            .map((quoteDetail,index) => (
+              index === activeIndex &&
+                <CommentQuote 
+                  key={quoteDetail.id}
+                  count={quoteDetail.commentCount}
+                />
+              )
+            )}
+          
         </div>
         <div className='home-footer-signup' style={{color: `${mainColor}`}}>
           <h2 className='home-footer-signup-request'>Would you like to write your own?</h2>
