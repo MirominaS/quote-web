@@ -143,11 +143,11 @@ const Home = () => {
                   status={quoteDetail.status}
                   upcount={quoteDetail.upvote}
                   downcount={quoteDetail.downvote}
-                  successStatus={loginStatus||signupStatus}
+                  successStatus={loginStatus && signupStatus}
                   handleVoteClick={() =>  setShowWarningPopup(true)}
                 />
               )
-            )
+            ) 
           }
           {quoteDetails.map(
             (quoteDetail, index) =>
@@ -155,7 +155,7 @@ const Home = () => {
                 <CommentQuote
                   key={quoteDetail.id}
                   count={quoteDetail.commentCount}
-                  successStatus={loginStatus||signupStatus}
+                  successStatus={loginStatus && signupStatus}
                   handleCommentClick={() =>  setShowWarningPopup(true)}
                 />
               )
