@@ -10,6 +10,7 @@ import DownloadImage from "../../components/downloadImage/DownloadImage";
 import ColorPicker from "../../components/colorPicker/ColorPicker";
 import Signup from "../../components/signup/Signup";
 import Popup from "../../components/Popup/Popup"
+import Login from "../../components/login/Login";
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -20,6 +21,7 @@ const Home = () => {
   const [signupStatus, setSignupStatus] = useState(false);
   const [showWarningPopup, setShowWarningPopup] = useState(false);
   const [getUsername, setGetUsername] = useState("");
+  const [showLogin, setShowLogin] = useState(false)
 
   const printRef = useRef();
 
@@ -104,7 +106,10 @@ const Home = () => {
             index === activeIndex && (
               <Quote
                 ref={printRef}
-                style={(showSignupPopUp||showSuccessSignupPopup) ? {filter:'blur(10px)'} : {backgroundColor: `${getBgColor}`,color: `${getTextColor}`}}
+                style={(showSignupPopUp||showSuccessSignupPopup) ? 
+                        {filter:'blur(10px)'} : 
+                        {backgroundColor: `${getBgColor}`,color: `${getTextColor}`}
+                      }
                 key={quoteDetail.id}
                 tag={quoteDetail.tag}
                 quote={quoteDetail.quote}
@@ -150,7 +155,12 @@ const Home = () => {
               task={"To React this Quote"}
               label={"Signup"}
               showPopup={showWarningPopup} 
-              closePopup = {() => {setShowWarningPopup(false); setShowSignupPopUp(true);console.log(showWarningPopup)}}   
+              closePopup = {() => {
+                  setShowWarningPopup(false); 
+                  setShowSignupPopUp(true);
+                  console.log(showWarningPopup)
+                }
+              }   
               position={"fixed"}
               left={"90px"} 
               top={"400px"}        
@@ -162,8 +172,12 @@ const Home = () => {
           <h2 className="home-footer-signup-request">
             {signupStatus ? getUsername: "Would you like to write your own?"}            
           </h2>
-          <h2 className="home-footer-signup-btn" onClick={()=> {!signupStatus ? setShowSignupPopUp(true): setSignupStatus(false); console.log(`sigup ${signupStatus}`)}}>
-            {signupStatus ? "Sign out": "Sign up"}
+          <h2 className="home-footer-signup-btn" 
+            onClick={()=> {
+              !signupStatus ? setShowSignupPopUp(true): setSignupStatus(false);
+              console.log(`sigup ${signupStatus}`)}
+            }>
+            {signupStatus ? "Log out": "Sign up"}
           </h2>
           <Signup 
             showSignupPopUp={showSignupPopUp} 
@@ -175,13 +189,21 @@ const Home = () => {
               }
             }
             sendUsername={handleGetUsername}
+            getLoginPopup={() => {{setShowLogin(true);setShowSignupPopUp(false)}}}
+          />
+          <Login
+            closeLoginPopup={() => setShowLogin(false)}
+            showLoginPopup={showLogin}
           />
           {showSuccessSignupPopup && 
             <Popup 
               task={"Signup Success!"}
               label={"Close"}
               showPopup={showSuccessSignupPopup} 
-              closePopup = {() => {setShowSuccessSignupPopup(false);console.log(showSuccessSignupPopup)}}            
+              closePopup = {() => {
+                setShowSuccessSignupPopup(false);
+                console.log(showSuccessSignupPopup)
+              }}            
             />
           }
         </div>

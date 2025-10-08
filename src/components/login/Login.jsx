@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-const Login = () => {
+const Login = ({showLoginPopup,closeLoginPopup}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -36,6 +36,8 @@ const Login = () => {
         return valid;
     }
 
+    if(!showLoginPopup) return null;
+
     const handleValidation = () => {
         const validate = validation()
         let isSuccess = true
@@ -62,7 +64,7 @@ const Login = () => {
 
   return (
     <div className='login-container'>
-        <div className='login-close-btn'  onClick={()=>{ setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
+        <div className='login-close-btn'  onClick={()=>{ closeLoginPopup(); setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
         <div className='login-title'>Log In</div>
         <div className='login-username'>
             <Input
