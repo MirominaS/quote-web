@@ -6,13 +6,12 @@ import { FaEyeSlash } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
 
-const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup}) => {
+const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername}) => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [error,setError] = useState({})
-    // const [isSuccess,setIsSuccess] = useState(false)
+    const [error,setError] = useState({});
     
 
     const emailRegex = /@/
@@ -67,16 +66,14 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup}) => {
         return isSuccess;
     }
     const sigupSuccess = () => {
-        let isSignupSuccess = true
         const success = handleValidation()
         if(success){
             console.log("success")
             isSignup();
-            isSignupSuccess = true
+            
         }else{
             console.log("fail")
-            isSignupSuccess = false
-            
+                      
         }
     }
 
@@ -86,7 +83,6 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup}) => {
     <div className='signup-container'>
         <div className='signup-close-btn' onClick={()=>{ closeSignupPopUp(); setEmail(""); setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
         <div className='signup-title'>Sign Up</div>
-        {/* <span className='signup-display-success'>{displayMessage}</span> */}
         <div className='signup-email'>
             <Input 
                 type='text'
@@ -107,7 +103,7 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup}) => {
                 width='90%'
                 height='35px'
                 value={username}
-                handleChange={(uname) => setUsername(uname.target.value)}
+                handleChange={(uname) => {setUsername(uname.target.value); sendUsername(uname.target.value)}}
             />
             {error.uname && <span className='username-error-message'>{error.uname}</span>}
         </div>
