@@ -6,7 +6,7 @@ import { TbArrowBigDownFilled } from "react-icons/tb";
 import './Vote.css'
 
 
-const Vote = ({status,upcount,downcount}) => {
+const Vote = ({status,upcount,downcount,handleVoteClick,successStatus}) => {
     const [showUpClicked, setShowupClicked] = useState(false);
     const [upCount, setUpcount] = useState(upcount);
     const [showDownClicked, setShowDownClicked] = useState(false);
@@ -65,11 +65,11 @@ const Vote = ({status,upcount,downcount}) => {
 
   return (
     <div className='vote-container' style={{background:getBackgroundColor()}}>
-        <div className='vote-upvote' onClick={handleUpCount} >
+        <div className='vote-upvote' onClick={()=>{!successStatus && handleVoteClick(); successStatus && handleUpCount()}} >
             {showUpClicked ?   <TbArrowBigUpFilled /> : <TbArrowBigUp />}                         
             {upCount}
         </div>
-        <div className='vote-downvote' onClick={handleDownCount}>
+        <div className='vote-downvote' onClick={()=>{!successStatus && handleVoteClick(); successStatus && handleDownCount(); console.log(successStatus)}}>
             {showDownClicked ? <TbArrowBigDownFilled /> :<TbArrowBigDown />}
             {downCount}
         </div>
