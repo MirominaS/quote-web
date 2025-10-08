@@ -6,12 +6,13 @@ import { FaEyeSlash } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
 
-const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername}) => {
+const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLoginPopup}) => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error,setError] = useState({});
+    
     
 
     const emailRegex = /@/
@@ -129,8 +130,8 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername}) => 
             </button>
         </div>
         <div className='signup-login'>
-            <span>Already have an account?{'\n'}</span>
-            <span>Login</span>
+            <span>Already have an account?</span>
+            <span onClick={getLoginPopup}>Login</span>
         </div>
     </div>
   )
