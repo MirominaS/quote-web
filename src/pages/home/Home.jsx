@@ -8,11 +8,17 @@ import Vote from "../../components/vote/Vote";
 import CommentQuote from "../../components/commentQuote/CommentQuote";
 import DownloadImage from "../../components/downloadImage/DownloadImage";
 import ColorPicker from "../../components/colorPicker/ColorPicker";
+import Signup from "../../components/signup/Signup";
+import Popup from "../../components/Popup/Popup"
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [getBgColor, setGetBgColor] = useState("");
   const [getTextColor, setGetTextColor] = useState("");
+  const [showSignupPopUp , setShowSignupPopUp] = useState(false);
+  const [showSuccessSignupPopup, setShowSuccessSignupPopup] = useState(false);
+  const [signupStatus, setSignupStatus] = useState(false);
+  const [showWarningPopup, setShowWarningPopup] = useState(false)
 
   const printRef = useRef();
 
@@ -23,7 +29,7 @@ const Home = () => {
       quote:
         "Success is not final, failure is not fatal: it is the courage to continue that counts",
       by: "Winston Churchill",
-      status: 1,
+      status: 0,
       upvote: 25,
       downvote: 10,
       commentCount: 15,
@@ -60,8 +66,6 @@ const Home = () => {
     },
   ];
 
- 
-
   const handleGetBgColor = (color) => {
     setGetBgColor(color);
   }
@@ -84,9 +88,9 @@ const Home = () => {
       activeIndex === quoteDetails.length - 1 ? 0 : activeIndex + 1
     );
   };
-
+// onClick={()=>{(showSignupPopUp||showSuccessPopup) ? (setShowSignupPopUp(false),setShowSuccessPopup(false)):null}}
   return (
-    <div className="home-container" style={{ backgroundColor: `${getBgColor}` }}>
+    <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} >
       <div className="home-quote">
         <div className="home-quote-prev" onClick={handlePrev}>
           <FaCaretLeft />
@@ -96,7 +100,7 @@ const Home = () => {
             index === activeIndex && (
               <Quote
                 ref={printRef}
-                style={{ color: `${getTextColor}`, backgroundColor: `${getBgColor}` }}
+                style={(showSignupPopUp||showSuccessSignupPopup) ? {filter:'blur(10px)'} : {backgroundColor: `${getBgColor}`,color: `${getTextColor}`}}
                 key={quoteDetail.id}
                 tag={quoteDetail.tag}
                 quote={quoteDetail.quote}
@@ -120,25 +124,58 @@ const Home = () => {
                   status={quoteDetail.status}
                   upcount={quoteDetail.upvote}
                   downcount={quoteDetail.downvote}
+                  successStatus={signupStatus}
+                  handleVoteClick={() =>  setShowWarningPopup(true)}
                 />
               )
-          )}
-
+            )
+          }
           {quoteDetails.map(
             (quoteDetail, index) =>
               index === activeIndex && (
                 <CommentQuote
                   key={quoteDetail.id}
                   count={quoteDetail.commentCount}
+                  successStatus={signupStatus}
+                  handleCommentClick={() =>  setShowWarningPopup(true)}
                 />
               )
           )}
+          {showWarningPopup &&
+            <Popup 
+              task={"To React this Quote"}
+              label={"Signup"}
+              showPopup={showWarningPopup} 
+              closePopup = {() => {setShowWarningPopup(false); setShowSignupPopUp(true);console.log(showWarningPopup)}}   
+              position={"fixed"}
+              left={"90px"} 
+              top={"400px"}        
+            />
+          }
         </div>
         <div className="home-footer-signup" >
           <h2 className="home-footer-signup-request">
             Would you like to write your own?
           </h2>
-          <h2 className="home-footer-signup-btn">Sign up</h2>
+          <h2 className="home-footer-signup-btn" onClick={()=> setShowSignupPopUp(true)}>Sign up</h2>
+          <Signup 
+            showSignupPopUp={showSignupPopUp} 
+            closeSignupPopUp={()=>setShowSignupPopUp(false)}
+            isSignup = {() => {
+              setShowSuccessSignupPopup(true);
+              setShowSignupPopUp(false)
+              setSignupStatus(true)
+              }
+            }
+          />
+          {showSuccessSignupPopup && 
+            <Popup 
+              task={"Signup Success!"}
+              label={"Close"}
+              showPopup={showSuccessSignupPopup} 
+              closePopup = {() => {setShowSuccessSignupPopup(false);console.log(showSuccessSignupPopup)}}            
+            />
+          }
         </div>
 
         <div className="home-footer-download-color">
