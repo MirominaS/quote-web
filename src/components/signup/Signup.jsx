@@ -131,7 +131,7 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
         </div>
         <div className='signup-login'>
             <span>Already have an account?</span>
-            <span onClick={getLoginPopup}>Login</span>
+            <span className='signup-login-btn' onClick={getLoginPopup}>Login</span>
         </div>
     </div>
   )
