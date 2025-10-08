@@ -78,5 +78,9 @@
         font-size: small;
         position: relative;
         bottom: 20px;
+        cursor: pointer;
+    }
+    .signup-login-btn:hover{
+        text-decoration: underline;
     }
 }

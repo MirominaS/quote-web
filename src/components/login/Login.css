@@ -80,6 +80,10 @@
         font-size: small;
         position: relative;
         bottom: 20px;
+        cursor: pointer;
+    }
+    .login-signup-btn:hover{
+        text-decoration: underline;
     }
     .error-message{
         color: red;
