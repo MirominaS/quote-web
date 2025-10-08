@@ -21,7 +21,9 @@ const Home = () => {
   const [signupStatus, setSignupStatus] = useState(false);
   const [showWarningPopup, setShowWarningPopup] = useState(false);
   const [getUsername, setGetUsername] = useState("");
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLoginPopup, setShowLoginPopup] = useState(false)
+  const [loginStatus, setLoginStatus] = useState(false)
+  const [showLoginSuccessPopup, setShowLoginSuccessPopup] = useState(false)
 
   const printRef = useRef();
 
@@ -94,19 +96,27 @@ const Home = () => {
   const handleGetUsername= (username) => {
     setGetUsername(username)
   }
-// onClick={()=>{(showSignupPopUp||showSuccessPopup) ? (setShowSignupPopUp(false),setShowSuccessPopup(false)):null}}
+
   return (
-    <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} >
-      <div className="home-quote" onClick={()=>{showSignupPopUp ? setShowSignupPopUp(false):null}}>
+    <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} > 
+      {/* while Clicking outside the popup the popup will close */}
+      <div className="home-quote" onClick={()=>{
+          (showSignupPopUp || showLoginPopup) ? 
+          (setShowSignupPopUp(false)||setShowLoginPopup(false)):
+          null
+          }}
+      > 
+        {/* see previouse quote */}
         <div className="home-quote-prev" onClick={handlePrev}>
           <FaCaretLeft />
         </div>
+        {/* map quote details from the object, download image ref, blur background while popups are shown */}
         {quoteDetails.map(
           (quoteDetail, index) =>
             index === activeIndex && (
               <Quote
                 ref={printRef}
-                style={(showSignupPopUp||showSuccessSignupPopup) ? 
+                style={(showSignupPopUp||showSuccessSignupPopup||showLoginPopup||showLoginSuccessPopup) ? 
                         {filter:'blur(10px)'} : 
                         {backgroundColor: `${getBgColor}`,color: `${getTextColor}`}
                       }
@@ -117,12 +127,12 @@ const Home = () => {
               />
             )
         )}
-
+        {/* see next quote  */}
         <div className="home-quote-next" onClick={handleNext}>
           <FaCaretRight />
         </div>
       </div>
-
+        {/* mapping vote details, comment details, show popup warning while login or singup false  */}
       <div className="home-footer" style={{ color: `${getTextColor}` }}>
         <div className="home-footer-vote-comment">
           {quoteDetails.map(
@@ -133,7 +143,7 @@ const Home = () => {
                   status={quoteDetail.status}
                   upcount={quoteDetail.upvote}
                   downcount={quoteDetail.downvote}
-                  successStatus={signupStatus}
+                  successStatus={loginStatus||signupStatus}
                   handleVoteClick={() =>  setShowWarningPopup(true)}
                 />
               )
@@ -145,7 +155,7 @@ const Home = () => {
                 <CommentQuote
                   key={quoteDetail.id}
                   count={quoteDetail.commentCount}
-                  successStatus={signupStatus}
+                  successStatus={loginStatus||signupStatus}
                   handleCommentClick={() =>  setShowWarningPopup(true)}
                 />
               )
@@ -153,11 +163,11 @@ const Home = () => {
           {showWarningPopup &&
             <Popup 
               task={"To React this Quote"}
-              label={"Signup"}
+              label={"Login"}
               showPopup={showWarningPopup} 
               closePopup = {() => {
                   setShowWarningPopup(false); 
-                  setShowSignupPopUp(true);
+                  setShowLoginPopup(true);
                   console.log(showWarningPopup)
                 }
               }   
@@ -167,18 +177,19 @@ const Home = () => {
             />
           }
         </div>
-
+          {/* login section, show login popup and its functioanlities  */}
         <div className="home-footer-signup" >
           <h2 className="home-footer-signup-request">
-            {signupStatus ? getUsername: "Would you like to write your own?"}            
+            {(loginStatus||signupStatus) ? getUsername: "Would you like to write your own?"}            
           </h2>
           <h2 className="home-footer-signup-btn" 
             onClick={()=> {
-              !signupStatus ? setShowSignupPopUp(true): setSignupStatus(false);
-              console.log(`sigup ${signupStatus}`)}
+              (!loginStatus&&!signupStatus) ? setShowLoginPopup(true): (setLoginStatus(false) || setSignupStatus(false));
+              console.log(`login ${loginStatus}`)}
             }>
-            {signupStatus ? "Log out": "Sign up"}
+            {(loginStatus||signupStatus) ? "Log out": "Log in"}
           </h2>
+          {/* signup popup  */}
           <Signup 
             showSignupPopUp={showSignupPopUp} 
             closeSignupPopUp={()=>setShowSignupPopUp(false)}
@@ -189,25 +200,35 @@ const Home = () => {
               }
             }
             sendUsername={handleGetUsername}
-            getLoginPopup={() => {{setShowLogin(true);setShowSignupPopUp(false)}}}
+            getLoginPopup={() => {{setShowLoginPopup(true); setShowSignupPopUp(false)}}}
           />
+          {/* login popup  */}
           <Login
-            closeLoginPopup={() => setShowLogin(false)}
-            showLoginPopup={showLogin}
+            closeLoginPopup={() => setShowLoginPopup(false)}
+            showLoginPopup={showLoginPopup}
+            getSignupPopup={() => {setShowSignupPopUp(true); setShowLoginPopup(false)}}
+            isLogin ={() => {
+              setShowLoginSuccessPopup(true)
+              setShowLoginPopup(false)
+              setLoginStatus(true)
+            }}
+            sendUsername={handleGetUsername}
           />
-          {showSuccessSignupPopup && 
+          {/* success status popup  */}
+          {(showSuccessSignupPopup || showLoginSuccessPopup) &&
             <Popup 
-              task={"Signup Success!"}
+              task={(signupStatus && "Signup Success!") || (loginStatus && "Login Success")}
               label={"Close"}
-              showPopup={showSuccessSignupPopup} 
+              showPopup={()=>{(signupStatus && showSuccessSignupPopup)||(loginStatus && showLoginSuccessPopup)}}
               closePopup = {() => {
                 setShowSuccessSignupPopup(false);
+                setShowLoginSuccessPopup(false)
                 console.log(showSuccessSignupPopup)
               }}            
             />
           }
         </div>
-
+          {/* download image and color pickers  */}
         <div className="home-footer-download-color">
           <DownloadImage printRef={printRef} />
           <div className="color-picker">
