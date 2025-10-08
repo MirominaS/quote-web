@@ -18,7 +18,8 @@ const Home = () => {
   const [showSignupPopUp , setShowSignupPopUp] = useState(false);
   const [showSuccessSignupPopup, setShowSuccessSignupPopup] = useState(false);
   const [signupStatus, setSignupStatus] = useState(false);
-  const [showWarningPopup, setShowWarningPopup] = useState(false)
+  const [showWarningPopup, setShowWarningPopup] = useState(false);
+  const [getUsername, setGetUsername] = useState("");
 
   const printRef = useRef();
 
@@ -70,7 +71,6 @@ const Home = () => {
     setGetBgColor(color);
   }
 
-
   const handleTextColor = (color) => {
     setGetTextColor(color)
   }
@@ -88,10 +88,14 @@ const Home = () => {
       activeIndex === quoteDetails.length - 1 ? 0 : activeIndex + 1
     );
   };
+
+  const handleGetUsername= (username) => {
+    setGetUsername(username)
+  }
 // onClick={()=>{(showSignupPopUp||showSuccessPopup) ? (setShowSignupPopUp(false),setShowSuccessPopup(false)):null}}
   return (
     <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} >
-      <div className="home-quote">
+      <div className="home-quote" onClick={()=>{showSignupPopUp ? setShowSignupPopUp(false):null}}>
         <div className="home-quote-prev" onClick={handlePrev}>
           <FaCaretLeft />
         </div>
@@ -153,11 +157,14 @@ const Home = () => {
             />
           }
         </div>
+
         <div className="home-footer-signup" >
           <h2 className="home-footer-signup-request">
-            Would you like to write your own?
+            {signupStatus ? getUsername: "Would you like to write your own?"}            
           </h2>
-          <h2 className="home-footer-signup-btn" onClick={()=> setShowSignupPopUp(true)}>Sign up</h2>
+          <h2 className="home-footer-signup-btn" onClick={()=> {!signupStatus ? setShowSignupPopUp(true): setSignupStatus(false); console.log(`sigup ${signupStatus}`)}}>
+            {signupStatus ? "Sign out": "Sign up"}
+          </h2>
           <Signup 
             showSignupPopUp={showSignupPopUp} 
             closeSignupPopUp={()=>setShowSignupPopUp(false)}
@@ -167,6 +174,7 @@ const Home = () => {
               setSignupStatus(true)
               }
             }
+            sendUsername={handleGetUsername}
           />
           {showSuccessSignupPopup && 
             <Popup 
