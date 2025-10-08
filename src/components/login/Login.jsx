@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-const Login = ({showLoginPopup,closeLoginPopup}) => {
+const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUsername}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +55,7 @@ const Login = ({showLoginPopup,closeLoginPopup}) => {
         const success = handleValidation()
         if(success){
             console.log("success")
-            // isLogin();            
+            isLogin();            
         }else{
             console.log("fail")                      
         }
@@ -74,8 +74,8 @@ const Login = ({showLoginPopup,closeLoginPopup}) => {
                 width='90%'
                 height='35px'
                 value={username}
-                handleChange={(uname) => {setUsername(uname.target.value); }}
-                // sendUsername(uname.target.value)
+                handleChange={(uname) => {setUsername(uname.target.value);  sendUsername(uname.target.value) }}
+                //
             />
             {error.uname && <span className='error-message'>{error.uname}</span>}
         </div>
@@ -98,7 +98,7 @@ const Login = ({showLoginPopup,closeLoginPopup}) => {
         <div className='login-button'><button onClick={loginSuccess}>Log in</button></div>
         <div className='login-signup'>
             <span>Do not have an Accout?</span>
-            <span>Sign up</span>
+            <span className='login-signup-btn' onClick={getSignupPopup}>Sign up</span>
         </div>
         
     </div>
