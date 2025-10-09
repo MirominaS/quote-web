@@ -14,12 +14,21 @@
         padding: 20px;        
 
         .quote-detail-tag{
-            width: 12%;
+            width: 100%;
             text-align: center;
             color: rgb(122,30,48);
             font-size: large;
-            font-style: oblique;
-            border-radius: 5px;
+            font-style: oblique;           
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 20px;
+
+            div{
+                background-color: #ffffff42;
+                border-radius: 5px;
+                padding: 5px;
+            }
         }
 
         .quote-detail-quote{

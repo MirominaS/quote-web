@@ -33,7 +33,7 @@ const Home = () => {
   const quoteDetails = [
     {
       id: 0,
-      tags: ["#Success",],
+      tags: ["Success","Motivation","Positivity"],
       quote:
         "Success is not final, failure is not fatal: it is the courage to continue that counts",
       by: "Winston Churchill",
@@ -44,7 +44,7 @@ const Home = () => {
     },
     {
       id: 1,
-      tag: "#Motivation",
+      tags: ["Motivation","Mindset", "BelieveInYourself" ,"Inspiration"],
       quote: "Do what you can, with what you have, where you are.",
       by: "Theodore Roosevelt",
       status: -1,
@@ -54,7 +54,7 @@ const Home = () => {
     },
     {
       id: 2,
-      tag: "#Productivity",
+      tags: ["Productivity","Focus", "TimeManagement", "LifeQuotes"],
       quote: "Don't count the days, make the days count.",
       by: "Muhammad Ali",
       status: 0,
@@ -64,7 +64,7 @@ const Home = () => {
     },
     {
       id: 3,
-      tag: "#Confidence",
+      tags: ["Confidence", "DreamBig", "SelfBelief", "Motivation"],
       quote: "Doubt kills more dreams than failure ever will.",
       by: "Suzy Kassem",
       status: -1,
@@ -124,9 +124,10 @@ const Home = () => {
                         {backgroundColor: `${getBgColor}`,color: `${getTextColor}`}
                       }
                 key={quoteDetail.id}
-                tag={quoteDetail.tag}
                 quote={quoteDetail.quote}
                 by={quoteDetail.by}
+                tag={quoteDetail.tags.map((tag,tagIndex)=> 
+                  <div className="home-quote-tag" key={tagIndex}>{'#'+tag}</div> )}
               />
             )
         )}

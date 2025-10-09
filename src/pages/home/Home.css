@@ -27,7 +27,8 @@
         .home-quote-prev:hover, .home-quote-next:hover{
             background-color: rgba(0, 0, 0, 0.1);
             color: rgb(0, 0, 0);
-        }     
+        } 
+    
     }
 
     .home-footer{
