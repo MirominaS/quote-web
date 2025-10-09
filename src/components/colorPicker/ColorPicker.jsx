@@ -44,6 +44,7 @@ const ColorPicker = ({sendColor,initialColor}) => {
   return (
     <div className="color-picker-container">
       <div
+        title={displayColor ? color : initialColor}
         className="color-picker-box"
         style={ displayColor ? {background: `${color}`}: {background:`${initialColor}`}}
         onClick={()=>{
@@ -58,7 +59,7 @@ const ColorPicker = ({sendColor,initialColor}) => {
           </div>
         ) : null}
       </div>
-      <div style={{color:"black"}}>{displayColor ? color : initialColor}</div>
+      {/* <div style={{color:"black"}}>{displayColor ? color : initialColor}</div> */}
       
     </div>
   );
