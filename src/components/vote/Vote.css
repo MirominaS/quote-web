@@ -19,9 +19,9 @@
         justify-content: center;
         gap: 5px;
         align-items: center;
-         border-radius: 10px;
+        border-radius: 10px;
     }
     .vote-upvote:hover,.vote-downvote:hover{
-        background-color: rgb(212, 212, 212);
+        background-color: rgb(212, 212, 212,0.3);
     }
  }
