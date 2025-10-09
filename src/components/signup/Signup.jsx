@@ -13,7 +13,6 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
     const [showPassword, setShowPassword] = useState(false);
     const [error,setError] = useState({});
     
-    
 
     const emailRegex = /@/
 
@@ -49,6 +48,7 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
         }
         setError(error)
         return valid;
+        
     }
 
     const handleValidation = () => {
@@ -63,18 +63,16 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
           validation()
           isSuccess = false
         }
-        // setDisplayMessage(message)
+        
         return isSuccess;
     }
     const sigupSuccess = () => {
         const success = handleValidation()
         if(success){
-            console.log("success")
-            isSignup();
-            
+            console.log("signup success")
+            isSignup();            
         }else{
-            console.log("fail")
-                      
+            console.log("signup fail")                      
         }
     }
 
@@ -91,10 +89,11 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 maxWidth='400px'
                 width='90%'
                 height='35px'
+                border={error.mail && '1px solid red'}
                 value={email}
                 handleChange={(mail) => setEmail(mail.target.value)}
             />
-            {error.mail && <span className='email-error-message'>{error.mail}</span>}
+            {error.mail && <span className='error-message'>{error.mail}</span>}
         </div>
         <div className='signup-username'>
             <Input
@@ -103,10 +102,11 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 maxWidth='400px'
                 width='90%'
                 height='35px'
+                border={error.uname && '1px solid red'}
                 value={username}
                 handleChange={(uname) => {setUsername(uname.target.value); sendUsername(uname.target.value)}}
             />
-            {error.uname && <span className='username-error-message'>{error.uname}</span>}
+            {error.uname && <span className='error-message'>{error.uname}</span>}
         </div>
         <div className='signup-password'>
              <Input
@@ -115,10 +115,11 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 maxWidth='400px'
                 width='90%'
                 height='35px'
+                border={error.pswrd && '1px solid red'}
                 value={password}
                 handleChange={(pwrd) => setPassword(pwrd.target.value)}
              />
-             {error.pswrd && <span className='password-error-message'>{error.pswrd}</span>}
+             {error.pswrd && <span className='error-message'>{error.pswrd}</span>}
              <div className='signup-password-icon' onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ?  <FaEye /> :<FaEyeSlash /> }
              </div>
