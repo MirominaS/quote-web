@@ -66,11 +66,11 @@ const Vote = ({status,upcount,downcount,handleVoteClick,successStatus}) => {
   return (
     <div className='vote-container' style={{background:getBackgroundColor()}}>
         <div className='vote-upvote' onClick={()=>{!successStatus && handleVoteClick(); successStatus && handleUpCount()}} >
-            {showUpClicked ?   <TbArrowBigUpFilled /> : <TbArrowBigUp />}                         
+            {showUpClicked ?   <TbArrowBigUpFilled style={{color:'#006400'}}/> : <TbArrowBigUp />}                         
             {upCount}
         </div>
         <div className='vote-downvote' onClick={()=>{!successStatus && handleVoteClick(); successStatus && handleDownCount(); console.log(successStatus)}}>
-            {showDownClicked ? <TbArrowBigDownFilled /> :<TbArrowBigDown />}
+            {showDownClicked ? <TbArrowBigDownFilled style={{color:'#8B0000'}}/> :<TbArrowBigDown />}
             {downCount}
         </div>
     </div>
