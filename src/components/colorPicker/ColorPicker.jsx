@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ColorPicker.css";
 import { ChromePicker } from "react-color";
 
-const ColorPicker = ({sendColor,initialColor}) => {
+const ColorPicker = ({sendColor,initialColor,iconLabel}) => {
     const [color, setColor] = useState("");
     const [displayColorPicker, setDisplayColorPicker] = useState(false);
     const [displayColor, setDisplayColor] = useState(false);
@@ -59,7 +59,7 @@ const ColorPicker = ({sendColor,initialColor}) => {
           </div>
         ) : null}
       </div>
-      {/* <div style={{color:"black"}}>{displayColor ? color : initialColor}</div> */}
+      <div style={{color:"black",fontSize:'20px',paddingTop:'5px',paddingRight:'5px'}}>{iconLabel}</div>
       
     </div>
   );
