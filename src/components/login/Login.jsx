@@ -73,6 +73,7 @@ const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUserna
                 maxWidth='400px'
                 width='90%'
                 height='35px'
+                border={error.uname && '1px solid red'}
                 value={username}
                 handleChange={(uname) => {setUsername(uname.target.value);  sendUsername(uname.target.value) }}
                 //
@@ -86,6 +87,7 @@ const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUserna
                 maxWidth='400px'
                 width='90%'
                 height='35px'
+                border={error.pswrd && '1px solid red'}
                 value={password}
                 handleChange={(pwrd) => setPassword(pwrd.target.value)}                
              />
