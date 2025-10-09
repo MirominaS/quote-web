@@ -11,6 +11,9 @@ import ColorPicker from "../../components/colorPicker/ColorPicker";
 import Signup from "../../components/signup/Signup";
 import Popup from "../../components/Popup/Popup"
 import Login from "../../components/login/Login";
+import { IoMdLogOut } from "react-icons/io";
+import { CiText } from "react-icons/ci";
+import { TbBackground } from "react-icons/tb";
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -30,7 +33,7 @@ const Home = () => {
   const quoteDetails = [
     {
       id: 0,
-      tag: "#Success",
+      tags: ["#Success",],
       quote:
         "Success is not final, failure is not fatal: it is the courage to continue that counts",
       by: "Winston Churchill",
@@ -101,8 +104,8 @@ const Home = () => {
     <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} > 
       {/* while Clicking outside the popup the popup will close */}
       <div className="home-quote" onClick={()=>{
-          (showSignupPopUp || showLoginPopup) ? 
-          (setShowSignupPopUp(false)||setShowLoginPopup(false)):
+          (showSignupPopUp || showLoginPopup ||showWarningPopup) ? 
+          (setShowSignupPopUp(false)||setShowLoginPopup(false)||setShowWarningPopup(false)):
           null
           }}
       > 
@@ -133,7 +136,7 @@ const Home = () => {
         </div>
       </div>
         {/* mapping vote details, comment details, show popup warning while login or singup false  */}
-      <div className="home-footer" style={{ color: `${getTextColor}` }}>
+      <div className="home-footer" >
         <div className="home-footer-vote-comment">
           {quoteDetails.map(
             (quoteDetail, index) =>
@@ -143,8 +146,8 @@ const Home = () => {
                   status={quoteDetail.status}
                   upcount={quoteDetail.upvote}
                   downcount={quoteDetail.downvote}
-                  successStatus={loginStatus && signupStatus}
-                  handleVoteClick={() =>  setShowWarningPopup(true)}
+                  successStatus={loginStatus || signupStatus}
+                  handleVoteClick={() => !showLoginPopup &&  setShowWarningPopup(true)}
                 />
               )
             ) 
@@ -155,8 +158,8 @@ const Home = () => {
                 <CommentQuote
                   key={quoteDetail.id}
                   count={quoteDetail.commentCount}
-                  successStatus={loginStatus && signupStatus}
-                  handleCommentClick={() =>  setShowWarningPopup(true)}
+                  successStatus={loginStatus || signupStatus}
+                  handleCommentClick={() => !showLoginPopup && setShowWarningPopup(true)}
                 />
               )
           )}
@@ -182,13 +185,13 @@ const Home = () => {
           <h2 className="home-footer-signup-request">
             {(loginStatus||signupStatus) ? getUsername: "Would you like to write your own?"}            
           </h2>
-          <h2 className="home-footer-signup-btn" 
+          <button className="home-footer-signup-btn" 
             onClick={()=> {
-              (!loginStatus&&!signupStatus) ? setShowLoginPopup(true): (setLoginStatus(false) || setSignupStatus(false));
+              (!loginStatus&&!signupStatus) ? (setShowLoginPopup(true)): (setLoginStatus(false) || setSignupStatus(false));
               console.log(`login ${loginStatus}`)}
-            }>
-            {(loginStatus||signupStatus) ? "Log out": "Log in"}
-          </h2>
+            } style={(loginStatus||signupStatus) ? {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:null}>
+            {(loginStatus||signupStatus) ? <IoMdLogOut />: "Log in"}
+          </button>
           {/* signup popup  */}
           <Signup 
             showSignupPopUp={showSignupPopUp} 
@@ -232,8 +235,8 @@ const Home = () => {
         <div className="home-footer-download-color">
           <DownloadImage printRef={printRef} />
           <div className="color-picker">
-            <ColorPicker sendColor = {handleGetBgColor} initialColor="#e6d084"/>
-            <ColorPicker sendColor={handleTextColor} initialColor="#7a1e30"/>
+            <ColorPicker sendColor = {handleGetBgColor} initialColor="#e6d084" iconLabel={<TbBackground />}/>
+            <ColorPicker sendColor={handleTextColor} initialColor="#7a1e30" iconLabel={<CiText />}/>
           </div>
         </div>
       </div>

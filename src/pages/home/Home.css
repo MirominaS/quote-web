@@ -36,6 +36,7 @@
         display: flex;
         justify-content: space-between; 
         align-items: center;
+        background-color: rgba(0, 0, 0, 0.2);
 
         .home-footer-vote-comment, .home-footer-download-color{
             width: 30%;
@@ -63,22 +64,33 @@
 
         .home-footer-signup{
             width: 40%;
+            height: 60%;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
             font-size: small;
             color: rgb(0, 0, 0);
+            background-color: white;
+            box-shadow: 0 0 10px rgb(0, 0, 0);
+            border-radius: 10px;
+            color: rgb(0, 0, 0);
 
             .home-footer-signup-btn{
-                text-decoration: underline;
                 cursor: pointer;
+                background-color: black;
+                color: white;
+                width: 80px;
+                height: 30px;
+                border: none;
+                border-radius: 5px;
+                text-align: center;
             }
 
             .home-footer-signup-btn:hover{
-                text-shadow: 2px px 10px rgb(122,30,48);
-                transform: scale(1.2);
-                transition-duration: 0.3s ;
+                background-color: white;
+                border: 1px solid black;
+                color: black;
             }
         }
 
