@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Quote from "../../components/quote/Quote";
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
@@ -27,52 +27,23 @@ const Home = () => {
   const [showLoginPopup, setShowLoginPopup] = useState(false)
   const [loginStatus, setLoginStatus] = useState(false)
   const [showLoginSuccessPopup, setShowLoginSuccessPopup] = useState(false)
+  const [quoteDetails, setQuoteDetails] = useState([])
 
   const printRef = useRef();
 
-  const quoteDetails = [
-    {
-      id: 0,
-      tags: ["Success","Motivation","Positivity"],
-      quote:
-        "Success is not final, failure is not fatal: it is the courage to continue that counts",
-      by: "Winston Churchill",
-      status: 0,
-      upvote: 25,
-      downvote: 10,
-      commentCount: 15,
-    },
-    {
-      id: 1,
-      tags: ["Motivation","Mindset", "BelieveInYourself" ,"Inspiration"],
-      quote: "Do what you can, with what you have, where you are.",
-      by: "Theodore Roosevelt",
-      status: -1,
-      upvote: 5,
-      downvote: 1,
-      commentCount: 25,
-    },
-    {
-      id: 2,
-      tags: ["Productivity","Focus", "TimeManagement", "LifeQuotes"],
-      quote: "Don't count the days, make the days count.",
-      by: "Muhammad Ali",
-      status: 0,
-      upvote: 29,
-      downvote: 2,
-      commentCount: 145,
-    },
-    {
-      id: 3,
-      tags: ["Confidence", "DreamBig", "SelfBelief", "Motivation"],
-      quote: "Doubt kills more dreams than failure ever will.",
-      by: "Suzy Kassem",
-      status: -1,
-      upvote: 48,
-      downvote: 3,
-      commentCount: 20,
-    },
-  ];
+  useEffect(() => {
+    fetchQuotes();
+  },[])
+
+  const fetchQuotes = async({writer,count} = {writer: "" , count: 100}) => {
+    const url = `http://localhost:1999/quotes/?writer=${writer}&count=${count}`
+    const response = await fetch(url)
+    const result = await response.json()
+    console.log(result)
+    setQuoteDetails(result)
+  }
+
+  const getService = () => {} //give url -> function returns the result
 
   const handleGetBgColor = (color) => {
     setGetBgColor(color);
@@ -100,6 +71,7 @@ const Home = () => {
     setGetUsername(username)
   }
 
+
   return (
     <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} > 
       {/* while Clicking outside the popup the popup will close */}
@@ -121,7 +93,7 @@ const Home = () => {
                 ref={printRef}
                 style={(showSignupPopUp||showSuccessSignupPopup||showLoginPopup||showLoginSuccessPopup) ? 
                         {filter:'blur(10px)'} : 
-                        {backgroundColor: `${getBgColor}`,color: `${getTextColor}`}
+                        {backgroundColor:`${getBgColor}`||"#e6d084", color: `${getTextColor}`||"#7a1e30"}
                       }
                 key={quoteDetail.id}
                 quote={quoteDetail.quote}
