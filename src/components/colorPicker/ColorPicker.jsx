@@ -28,7 +28,6 @@ const ColorPicker = ({sendColor,initialColor,iconLabel}) => {
     popover: {
       position: "absolute",
       zIndex: "2",
-      bottom: 0,
       right:"10px",
       bottom:"60px",
     },
