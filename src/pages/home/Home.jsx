@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Quote from "../../components/quote/Quote";
-import { FaCaretLeft } from "react-icons/fa6";
+import { FaAnglesUp, FaCaretLeft } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
 import "./Home.css";
 
@@ -14,6 +14,8 @@ import Login from "../../components/login/Login";
 import { IoMdLogOut } from "react-icons/io";
 import { CiText } from "react-icons/ci";
 import { TbBackground } from "react-icons/tb";
+import getService from "/src/utils/httpServices.js"
+import { HashLoader } from "react-spinners";
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -28,22 +30,35 @@ const Home = () => {
   const [loginStatus, setLoginStatus] = useState(false)
   const [showLoginSuccessPopup, setShowLoginSuccessPopup] = useState(false)
   const [quoteDetails, setQuoteDetails] = useState([])
+  const [footerShow, setFooterShow] = useState(true)
+  const [isLoading,setIsLoading] = useState(false);
 
   const printRef = useRef();
 
   useEffect(() => {
-    fetchQuotes();
+    fetchQuotes("http://localhost:1999/quotes/?writer&count");
+    
   },[])
 
-  const fetchQuotes = async({writer,count} = {writer: "" , count: 100}) => {
-    const url = `http://localhost:1999/quotes/?writer=${writer}&count=${count}`
-    const response = await fetch(url)
-    const result = await response.json()
-    console.log(result)
-    setQuoteDetails(result)
+  // const fetchQuotes = async({writer,count} = {writer: "" , count: 100}) => {
+  //   const url = `http://localhost:1999/quotes/?writer=${writer}&count=${count}`
+  //   const response = await fetch(url)
+  //   const result = await response.json()
+  //   console.log(result)
+  //   setQuoteDetails(result)
+  // }
+  const fetchQuotes = async(url) => {
+    try {
+      setIsLoading(true)
+      const getDetails = await getService(url)
+      setQuoteDetails(getDetails)
+      setIsLoading(false)
+      
+    } catch (error) {
+      console.log("error:",error)
+    }
+   
   }
-
-  const getService = () => {} //give url -> function returns the result
 
   const handleGetBgColor = (color) => {
     setGetBgColor(color);
@@ -74,6 +89,7 @@ const Home = () => {
 
   return (
     <div className="home-container" style={{ backgroundColor: `${getBgColor}` }} > 
+    
       {/* while Clicking outside the popup the popup will close */}
       <div className="home-quote" onClick={()=>{
           (showSignupPopUp || showLoginPopup ||showWarningPopup) ? 
@@ -85,6 +101,7 @@ const Home = () => {
         <div className="home-quote-prev" onClick={handlePrev}>
           <FaCaretLeft />
         </div>
+        {isLoading && <HashLoader style={{color:"#7a1e30"}}/>}
         {/* map quote details from the object, download image ref, blur background while popups are shown */}
         {quoteDetails.map(
           (quoteDetail, index) =>
@@ -109,107 +126,112 @@ const Home = () => {
         </div>
       </div>
         {/* mapping vote details, comment details, show popup warning while login or singup false  */}
-      <div className="home-footer" >
-        <div className="home-footer-vote-comment">
-          {quoteDetails.map(
-            (quoteDetail, index) =>
-              index === activeIndex && (
-                <Vote
-                  key={quoteDetail.id}
-                  status={quoteDetail.status}
-                  upcount={quoteDetail.upvote}
-                  downcount={quoteDetail.downvote}
-                  successStatus={loginStatus || signupStatus}
-                  handleVoteClick={() => !showLoginPopup &&  setShowWarningPopup(true)}
-                />
-              )
-            ) 
-          }
-          {quoteDetails.map(
-            (quoteDetail, index) =>
-              index === activeIndex && (
-                <CommentQuote
-                  key={quoteDetail.id}
-                  count={quoteDetail.commentCount}
-                  successStatus={loginStatus || signupStatus}
-                  handleCommentClick={() => !showLoginPopup && setShowWarningPopup(true)}
-                />
-              )
-          )}
-          {showWarningPopup &&
-            <Popup 
-              task={"To React this Quote"}
-              label={"Login"}
-              showPopup={showWarningPopup} 
-              closePopup = {() => {
-                  setShowWarningPopup(false); 
-                  setShowLoginPopup(true);
-                  console.log(showWarningPopup)
-                }
-              }   
-              position={"fixed"}
-              left={"90px"} 
-              top={"400px"}        
-            />
-          }
+      <div className="footer-transporter" style={{bottom: footerShow? 0 : '-15vh'}}>
+        <div className="footer-toggle" onClick={() => setFooterShow(!footerShow)}>
+          <FaAnglesUp style={{ transform: footerShow? 'rotateZ(180deg)' : 'rotateZ(0deg)' }}/>
         </div>
-          {/* login section, show login popup and its functioanlities  */}
-        <div className="home-footer-signup" >
-          <h2 className="home-footer-signup-request">
-            {(loginStatus||signupStatus) ? getUsername: "Would you like to write your own?"}            
-          </h2>
-          <button className="home-footer-signup-btn" 
-            onClick={()=> {
-              (!loginStatus&&!signupStatus) ? (setShowLoginPopup(true)): (setLoginStatus(false) || setSignupStatus(false));
-              console.log(`login ${loginStatus}`)}
-            } style={(loginStatus||signupStatus) ? {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:null}>
-            {(loginStatus||signupStatus) ? <IoMdLogOut />: "Log in"}
-          </button>
-          {/* signup popup  */}
-          <Signup 
-            showSignupPopUp={showSignupPopUp} 
-            closeSignupPopUp={()=>setShowSignupPopUp(false)}
-            isSignup = {() => {
-              setShowSuccessSignupPopup(true);
-              setShowSignupPopUp(false)
-              setSignupStatus(true)
-              }
+        <div className="home-footer" >
+          <div className="home-footer-vote-comment">
+            {quoteDetails.map(
+              (quoteDetail, index) =>
+                index === activeIndex && (
+                  <Vote
+                    key={quoteDetail.id}
+                    status={quoteDetail.status}
+                    upcount={quoteDetail.upvote}
+                    downcount={quoteDetail.downvote}
+                    successStatus={loginStatus || signupStatus}
+                    handleVoteClick={() => !showLoginPopup &&  setShowWarningPopup(true)}
+                  />
+                )
+              ) 
             }
-            sendUsername={handleGetUsername}
-            getLoginPopup={() => {{setShowLoginPopup(true); setShowSignupPopUp(false)}}}
-          />
-          {/* login popup  */}
-          <Login
-            closeLoginPopup={() => setShowLoginPopup(false)}
-            showLoginPopup={showLoginPopup}
-            getSignupPopup={() => {setShowSignupPopUp(true); setShowLoginPopup(false)}}
-            isLogin ={() => {
-              setShowLoginSuccessPopup(true)
-              setShowLoginPopup(false)
-              setLoginStatus(true)
-            }}
-            sendUsername={handleGetUsername}
-          />
-          {/* success status popup  */}
-          {(showSuccessSignupPopup || showLoginSuccessPopup) &&
-            <Popup 
-              task={(signupStatus && "Signup Success!") || (loginStatus && "Login Success")}
-              label={"Close"}
-              showPopup={()=>{(signupStatus && showSuccessSignupPopup)||(loginStatus && showLoginSuccessPopup)}}
-              closePopup = {() => {
-                setShowSuccessSignupPopup(false);
-                setShowLoginSuccessPopup(false)
-                console.log(showSuccessSignupPopup)
-              }}            
+            {quoteDetails.map(
+              (quoteDetail, index) =>
+                index === activeIndex && (
+                  <CommentQuote
+                    key={quoteDetail.id}
+                    count={quoteDetail.commentCount}
+                    successStatus={loginStatus || signupStatus}
+                    handleCommentClick={() => !showLoginPopup && setShowWarningPopup(true)}
+                  />
+                )
+            )}
+            {showWarningPopup &&
+              <Popup 
+                task={"To React this Quote"}
+                label={"Login"}
+                showPopup={showWarningPopup} 
+                closePopup = {() => {
+                    setShowWarningPopup(false); 
+                    setShowLoginPopup(true);
+                    console.log(showWarningPopup)
+                  }
+                }   
+                position={"fixed"}
+                left={"90px"} 
+                top={"400px"}        
+              />
+            }
+          </div>
+            {/* login section, show login popup and its functioanlities  */}
+          <div className="home-footer-signup" >
+            <h2 className="home-footer-signup-request">
+              {(loginStatus||signupStatus) ? getUsername: "Would you like to write your own?"}            
+            </h2>
+            <button className="home-footer-signup-btn" 
+              onClick={()=> {
+                (!loginStatus&&!signupStatus) ? (setShowLoginPopup(true)): (setLoginStatus(false) || setSignupStatus(false));
+                console.log(`login ${loginStatus}`)}
+              } style={(loginStatus||signupStatus) ? {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:null}>
+              {(loginStatus||signupStatus) ? <IoMdLogOut />: "Log in"}
+            </button>
+            {/* signup popup  */}
+            <Signup 
+              showSignupPopUp={showSignupPopUp} 
+              closeSignupPopUp={()=>setShowSignupPopUp(false)}
+              isSignup = {() => {
+                setShowSuccessSignupPopup(true);
+                setShowSignupPopUp(false)
+                setSignupStatus(true)
+                }
+              }
+              sendUsername={handleGetUsername}
+              getLoginPopup={() => {{setShowLoginPopup(true); setShowSignupPopUp(false)}}}
             />
-          }
-        </div>
-          {/* download image and color pickers  */}
-        <div className="home-footer-download-color">
-          <DownloadImage printRef={printRef} />
-          <div className="color-picker">
-            <ColorPicker sendColor = {handleGetBgColor} initialColor="#e6d084" iconLabel={<TbBackground />}/>
-            <ColorPicker sendColor={handleTextColor} initialColor="#7a1e30" iconLabel={<CiText />}/>
+            {/* login popup  */}
+            <Login
+              closeLoginPopup={() => setShowLoginPopup(false)}
+              showLoginPopup={showLoginPopup}
+              getSignupPopup={() => {setShowSignupPopUp(true); setShowLoginPopup(false)}}
+              isLogin ={() => {
+                setShowLoginSuccessPopup(true)
+                setShowLoginPopup(false)
+                setLoginStatus(true)
+              }}
+              sendUsername={handleGetUsername}
+            />
+            {/* success status popup  */}
+            {(showSuccessSignupPopup || showLoginSuccessPopup) &&
+              <Popup 
+                task={(signupStatus && "Signup Success!") || (loginStatus && "Login Success")}
+                label={"Close"}
+                showPopup={()=>{(signupStatus && showSuccessSignupPopup)||(loginStatus && showLoginSuccessPopup)}}
+                closePopup = {() => {
+                  setShowSuccessSignupPopup(false);
+                  setShowLoginSuccessPopup(false)
+                  console.log(showSuccessSignupPopup)
+                }}            
+              />
+            }
+          </div>
+            {/* download image and color pickers  */}
+          <div className="home-footer-download-color">
+            <DownloadImage printRef={printRef} />
+            <div className="color-picker">
+              <ColorPicker sendColor = {handleGetBgColor} initialColor="#e6d084" iconLabel={<TbBackground />}/>
+              <ColorPicker sendColor={handleTextColor} initialColor="#7a1e30" iconLabel={<CiText />}/>
+            </div>
           </div>
         </div>
       </div>
