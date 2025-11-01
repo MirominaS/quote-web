@@ -1,9 +1,9 @@
 //async fun
 const getService = async(url) => {
     const response = await fetch(url)
-    const result = await response.json()
-    console.log(result)    
-    return result
+    const {data,message,success} = await response.json()
+    console.log({data,message,success})    
+    return data
 } 
 
 export default getService;
