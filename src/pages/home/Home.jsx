@@ -36,21 +36,16 @@ const Home = () => {
   const printRef = useRef();
 
   useEffect(() => {
-    fetchQuotes("http://localhost:1999/quotes/?writer&count");
+    fetchQuotes();
     
   },[])
 
-  // const fetchQuotes = async({writer,count} = {writer: "" , count: 100}) => {
-  //   const url = `http://localhost:1999/quotes/?writer=${writer}&count=${count}`
-  //   const response = await fetch(url)
-  //   const result = await response.json()
-  //   console.log(result)
-  //   setQuoteDetails(result)
-  // }
-  const fetchQuotes = async(url) => {
+
+  const fetchQuotes = async() => {
     try {
       setIsLoading(true)
-      const getDetails = await getService(url)
+      const getDetails = await getService("http://localhost:1999/quotes/?writer&count")
+      console.log(getDetails)
       setQuoteDetails(getDetails)
       setIsLoading(false)
       
