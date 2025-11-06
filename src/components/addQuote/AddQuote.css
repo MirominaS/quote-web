@@ -63,6 +63,22 @@
         }
     }  
 
+    .addquote-close-btn{
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: larger;
+        position: relative;
+        left: 45%;
+    }
+
+    .addquote-close-btn:hover{
+        background-color: #dddddd;
+        border-radius: 5px;
+    }
+
     .addquote-button{
         width: 100%;
         display: flex;

@@ -16,6 +16,8 @@ import { CiText } from "react-icons/ci";
 import { TbBackground } from "react-icons/tb";
 import {getService} from "/src/utils/httpServices.js"
 import { HashLoader } from "react-spinners";
+import AddQuote from "../../components/addQuote/AddQuote";
+import { MdAddCircle } from "react-icons/md";
 
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,6 +34,9 @@ const Home = () => {
   const [quoteDetails, setQuoteDetails] = useState([])
   const [footerShow, setFooterShow] = useState(true)
   const [isLoading,setIsLoading] = useState(false);
+  const [showAddQuotePopup,setShowAddQuotePopup] = useState(false);
+  const [showAddQuoteSuccessPopup, setShowAddQuoteSuccessPopup] = useState(false)
+  const [addQuoteStatus, setAddQuoteStatus] = useState(false)
 
   const printRef = useRef();
 
@@ -182,6 +187,18 @@ const Home = () => {
               } style={(loginStatus||signupStatus) ? {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:null}>
               {(loginStatus||signupStatus) ? <IoMdLogOut />: "Log in"}
             </button>
+            {(loginStatus||signupStatus) &&
+            <button className="home-footer-add-btn"  
+              onClick={() => {
+                (!addQuoteStatus) ? (setShowAddQuotePopup(true) || setShowLoginSuccessPopup(false) || setShowSuccessSignupPopup(false)) : setAddQuoteStatus(false)
+              }}
+              style={(loginStatus||signupStatus) ? 
+              {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:
+              null}
+            >
+               <MdAddCircle/>
+            </button>}
+            
             {/* signup popup  */}
             <Signup 
               showSignupPopUp={showSignupPopUp} 
@@ -207,15 +224,26 @@ const Home = () => {
               }}
               sendUsername={handleGetUsername}
             />
+            {/* AddQuote popup */}
+            <AddQuote
+              closeAddQuotePopup={() => setShowAddQuotePopup(false)}
+              showAddQuotePopup={showAddQuotePopup}
+              isAdd={() => {
+                setShowAddQuoteSuccessPopup(true)
+                setShowAddQuotePopup(false)
+                setAddQuoteStatus(true)
+              }}
+            />
             {/* success status popup  */}
-            {(showSuccessSignupPopup || showLoginSuccessPopup) &&
+            {(showSuccessSignupPopup || showLoginSuccessPopup || showAddQuoteSuccessPopup) &&
               <Popup 
-                task={(signupStatus && "Signup Success!") || (loginStatus && "Login Success")}
+                task={(signupStatus && "Signup Success!") || (loginStatus && "Login Success!") || (addQuoteStatus && "Quote added Successfully!")}
                 label={"Close"}
-                showPopup={()=>{(signupStatus && showSuccessSignupPopup)||(loginStatus && showLoginSuccessPopup)}}
+                showPopup={()=>{(signupStatus && showSuccessSignupPopup)||(loginStatus && showLoginSuccessPopup) || (addQuoteStatus && showAddQuoteSuccessPopup)}}
                 closePopup = {() => {
                   setShowSuccessSignupPopup(false);
                   setShowLoginSuccessPopup(false)
+                  setShowAddQuoteSuccessPopup(false)
                   console.log(showSuccessSignupPopup)
                 }}            
               />

@@ -98,7 +98,7 @@
             border-radius: 10px;
             color: rgb(0, 0, 0);
 
-            .home-footer-signup-btn{
+            .home-footer-signup-btn, .home-footer-add-btn{
                 cursor: pointer;
                 background-color: black;
                 color: white;
@@ -114,6 +114,8 @@
                 border: 1px solid black;
                 color: black;
             }
+            
+            
         }
 
         .home-footer-vote, .home-footer-comment, .home-footer-download,.home-footer-color-background,.home-footer-color-text{

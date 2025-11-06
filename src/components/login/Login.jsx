@@ -64,7 +64,7 @@ const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUserna
 
   return (
     <div className='login-container'>
-        <div className='login-close-btn'  onClick={()=>{ closeLoginPopup(); setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
+        <div className='login-close-btn'  onClick={()=>{closeLoginPopup(); setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
         <div className='login-title'>Log In</div>
         <div className='login-username'>
             <Input

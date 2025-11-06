@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import './AddQuote.css'
 import { Filter } from 'bad-words'
+import { IoClose } from 'react-icons/io5';
 
-const AddQuote = () => {
+const AddQuote = ({showAddQuotePopup,closeAddQuotePopup,isAdd}) => {
     const [quote, setQuote] = useState("");
     const [tags, setTags] = useState([]);
     const [author, setAuthor] = useState("");
@@ -67,13 +68,17 @@ const AddQuote = () => {
         const success = handleAddValidation()
         if(success){
             console.log("Success")
+            isAdd();
         }else{
             console.log("fail")
         }
     }
 
+    if(!showAddQuotePopup) return null;
+
   return (
     <div className='addquote-container'>
+        <div className='addquote-close-btn'  onClick={()=>{closeAddQuotePopup(); setQuote("");setTags([]),setAuthor("");setFiltertext({})}}><IoClose /></div>
         <div className='addquote-title'> Add a Quote </div>
         <div className='addquote-quote'>
            <textarea 
@@ -111,7 +116,7 @@ const AddQuote = () => {
         </div>
         <div className='addquote-button'>
             <div className='addquote-cancel-btn'>
-                <button>Cancel</button>
+                <button onClick={()=>{closeAddQuotePopup(); setQuote("");setTags([]),setAuthor(""); setFiltertext({})}}>Cancel</button>
             </div>
             <div className='addquote-add-btn'>
                 <button onClick={addSuccess}>Add</button>
