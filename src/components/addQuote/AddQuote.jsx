@@ -78,7 +78,14 @@ const AddQuote = ({showAddQuotePopup,closeAddQuotePopup,isAdd}) => {
 
   return (
     <div className='addquote-container'>
-        <div className='addquote-close-btn'  onClick={()=>{closeAddQuotePopup(); setQuote("");setTags([]),setAuthor("");setFiltertext({})}}><IoClose /></div>
+        <div className='addquote-close-btn'  onClick={()=>{
+                closeAddQuotePopup();
+                setQuote("");
+                setTags([]);
+                setAuthor("");
+                setFiltertext({})
+            }}><IoClose />
+        </div>
         <div className='addquote-title'> Add a Quote </div>
         <div className='addquote-quote'>
            <textarea 
@@ -116,7 +123,13 @@ const AddQuote = ({showAddQuotePopup,closeAddQuotePopup,isAdd}) => {
         </div>
         <div className='addquote-button'>
             <div className='addquote-cancel-btn'>
-                <button onClick={()=>{closeAddQuotePopup(); setQuote("");setTags([]),setAuthor(""); setFiltertext({})}}>Cancel</button>
+                <button onClick={()=>{
+                        closeAddQuotePopup(); 
+                        setQuote("");setTags([]);
+                        setAuthor(""); 
+                        setFiltertext({});
+                    }}>Cancel
+                </button>
             </div>
             <div className='addquote-add-btn'>
                 <button onClick={addSuccess}>Add</button>
