@@ -4,61 +4,69 @@ import Input from '../input/Input'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { postService } from '../../utils/httpServices';
 
 
 const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLoginPopup}) => {
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error,setError] = useState({});
-    
+    const [userDetail,setUserDetail] = useState({email:"",username:"",password:""})
+
+
+    const signupUser = async(userData) => {   
+      const {success} = await postService('http://localhost:1999/quotes/user',userData)
+    }
+  
 
     const emailRegex = /@/
 
     const validation = () => {
         let error = {mail:"",uname:"",pswrd:""};
         let valid = true;
-        if(!email){
+        if(!userDetail.email){
             error.mail = "Email is required"
-            setEmail("")
+            setUserDetail({email:""})
             valid = false;
-        }else if(!emailRegex.test(email)){
+        }else if(!emailRegex.test(userDetail.email)){
             error.mail = "Invalid Email"
-            setEmail("")
+            setUserDetail({email:""})
             valid = false;
         }
-        if(!username.trim()){
+        if(!userDetail.username.trim()){
             error.uname = "Username is required"
-            setUsername("")
+            setUserDetail({username:""})
             valid = false;
-        }else if(username.length < 5){
+        }else if(userDetail.username.length < 5){
             error.uname = "Username should be atlest 6 charectors"
-            setUsername("")
+            setUserDetail({username:""})
             valid = false;
         }
-        if(!password.trim()){
+        if(!userDetail.password.trim()){
             error.pswrd = "Password is required"
-            setPassword("")
+            setUserDetail({password:""})
             valid = false;
-        }else if(password.length < 8){
+        }else if(userDetail.password.length < 8){
             error.pswrd = "Password should contain atleast 8 char"
-            setPassword("")
+            setUserDetail({password:""})
             valid = false;
         }
         setError(error)
-        return valid;
-        
+        return valid;        
     }
 
-    const handleValidation = () => {
+    const handleValidation = async() => {
         const validate = validation()
         let isSuccess = true
         if(validate){
-          isSuccess=true
-          setEmail("")
-          setUsername("")
-          setPassword("")
+            const userData = {
+                email:userDetail.email,
+                username:userDetail.username,
+                password:userDetail.password
+            }
+            await signupUser(userData)
+            isSignup()
+            isSuccess=true
+            setUserDetail({email:"",username:"",password:""})
         }else{
           validation()
           isSuccess = false
@@ -76,11 +84,17 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
         }
     }
 
+    const closeButton = () => {
+        closeSignupPopUp()
+        setUserDetail({email:"",username:"",password:""}) 
+        setError("")
+    }
+
     if(!showSignupPopUp) return null;
 
   return (
     <div className='signup-container'>
-        <div className='signup-close-btn' onClick={()=>{ closeSignupPopUp(); setEmail(""); setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
+        <div className='signup-close-btn' onClick={closeButton}><IoClose /></div>
         <div className='signup-title'>Sign Up</div>
         <div className='signup-email'>
             <Input 
@@ -90,8 +104,8 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 width='90%'
                 height='35px'
                 border={error.mail && '1px solid red'}
-                value={email}
-                handleChange={(mail) => setEmail(mail.target.value)}
+                value={userDetail.email}
+                handleChange={(mail) => setUserDetail(prev => ({...prev,email:mail.target.value}))}
             />
             {error.mail && <span className='error-message'>{error.mail}</span>}
         </div>
@@ -103,8 +117,8 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 width='90%'
                 height='35px'
                 border={error.uname && '1px solid red'}
-                value={username}
-                handleChange={(uname) => {setUsername(uname.target.value); sendUsername(uname.target.value)}}
+                value={userDetail.username}
+                handleChange={(uname) => {setUserDetail(prev => ({...prev,username:uname.target.value})); sendUsername(uname.target.value)}}
             />
             {error.uname && <span className='error-message'>{error.uname}</span>}
         </div>
@@ -116,8 +130,8 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 width='90%'
                 height='35px'
                 border={error.pswrd && '1px solid red'}
-                value={password}
-                handleChange={(pwrd) => setPassword(pwrd.target.value)}
+                value={userDetail.password}
+                handleChange={(pwrd) => setUserDetail(prev => ({...prev,password:pwrd.target.value}))}
              />
              {error.pswrd && <span className='error-message'>{error.pswrd}</span>}
              <div className='signup-password-icon' onClick={() => setShowPassword(!showPassword)}>
