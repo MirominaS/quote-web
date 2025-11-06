@@ -14,7 +14,7 @@ import Login from "../../components/login/Login";
 import { IoMdLogOut } from "react-icons/io";
 import { CiText } from "react-icons/ci";
 import { TbBackground } from "react-icons/tb";
-import getService from "/src/utils/httpServices.js"
+import {getService} from "/src/utils/httpServices.js"
 import { HashLoader } from "react-spinners";
 
 const Home = () => {
@@ -55,6 +55,7 @@ const Home = () => {
    
   }
 
+  
   const handleGetBgColor = (color) => {
     setGetBgColor(color);
   }
