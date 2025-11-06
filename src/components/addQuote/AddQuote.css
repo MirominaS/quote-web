@@ -11,13 +11,17 @@
     position: fixed;
     left: 30%;
     top: 10%;
+    
+    .addquote-title{
+        font-size: x-large;
+    }
 
     .addquote-title, 
     .addquote-quote, 
     .addquote-tags, 
     .addquote-author{
         width: 100%;
-        height: 60px;
+        height: 65px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -25,19 +29,51 @@
         position: relative;
         bottom: 20px;
         text-align: start;
-        background-color: antiquewhite;
-    }
+
+        .quote-txt,.tags-txt,.author-txt{
+            height: 90%;
+            width: 90%;
+            resize: none;
+            font-family: "Nunito", sans-serif;
+            padding-left: 5px;
+            border-radius: 5px;
+            background-color: #dddddd;
+            border: none;
+            border-radius: 5px;
+            padding-left: 10px;  
+            padding-top: 10px;          
+        }
+
+        .quote-txt:focus,.tags-txt:focus,.author-txt:focus,
+        .quote-txt:hover,.tags-txt:hover,.author-txt:hover{
+            outline: none;
+            box-shadow: inset 0 0 3px 0.5px #333333;
+        }
+
+        textarea::placeholder{
+            color: #222222
+        }     
+        
+        .warn-message{
+            color: red;
+            font-size: 10px;
+            font-style: italic;
+            text-align: start;
+            width: 92%;
+        }
+    }  
 
     .addquote-button{
         width: 100%;
         display: flex;
         justify-content: space-around;
         align-items: center;
-        background-color: antiquewhite;
+        position: relative;
+        bottom: 20px;
 
         .addquote-cancel-btn,.addquote-add-btn{
             background-color: dimgray;
-            height: 35px;
+            height: 30px;
             width: 100px;
             border-radius: 5px;
 
@@ -45,6 +81,17 @@
                 width: 100%;
                 height: 100%;
                 border-radius: 5px;
+                font-family: "Nunito", sans-serif;
+                background-color: black;
+                color: white;
+                border: none;
+            }
+
+            button:hover{
+                background-color: white;
+                border: 1px solid black;
+                color: black;
+                cursor: pointer;
             }
         }
     }
