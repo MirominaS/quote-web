@@ -111,7 +111,9 @@ const Home = () => {
                 ref={printRef}
                 style={(showSignupPopUp||showSuccessSignupPopup||showLoginPopup||showLoginSuccessPopup) ? 
                         {filter:'blur(10px)'} : 
-                        {backgroundColor:`${getBgColor}`||"#e6d084", color: `${getTextColor}`||"#7a1e30"}
+                        {backgroundColor:`${getBgColor}`||
+                        "#e6d084", color: `${getTextColor}`||
+                        "#7a1e30"}
                       }
                 key={quoteDetail.id}
                 quote={quoteDetail.quote}
@@ -180,17 +182,25 @@ const Home = () => {
             <h2 className="home-footer-signup-request">
               {(loginStatus||signupStatus) ? getUsername: "Would you like to write your own?"}            
             </h2>
+
             <button className="home-footer-signup-btn" 
               onClick={()=> {
-                (!loginStatus&&!signupStatus) ? (setShowLoginPopup(true)): (setLoginStatus(false) || setSignupStatus(false));
+                (!loginStatus&&!signupStatus) ? 
+                (setShowLoginPopup(true)): 
+                (setLoginStatus(false) || setSignupStatus(false));
                 console.log(`login ${loginStatus}`)}
-              } style={(loginStatus||signupStatus) ? {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:null}>
+              } 
+              style={(loginStatus||signupStatus) ? 
+                {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:null}>
               {(loginStatus||signupStatus) ? <IoMdLogOut />: "Log in"}
             </button>
+
             {(loginStatus||signupStatus) &&
             <button className="home-footer-add-btn"  
               onClick={() => {
-                (!addQuoteStatus) ? (setShowAddQuotePopup(true) || setShowLoginSuccessPopup(false) || setShowSuccessSignupPopup(false)) : setAddQuoteStatus(false)
+                (!addQuoteStatus) ? (setShowAddQuotePopup(true) || 
+                setShowLoginSuccessPopup(false) || setShowSuccessSignupPopup(false)) : 
+                setAddQuoteStatus(false)
               }}
               style={(loginStatus||signupStatus) ? 
               {width:'30px',height:'30px',fontSize:'20px',paddingTop:'5px'}:
@@ -237,9 +247,15 @@ const Home = () => {
             {/* success status popup  */}
             {(showSuccessSignupPopup || showLoginSuccessPopup || showAddQuoteSuccessPopup) &&
               <Popup 
-                task={(signupStatus && "Signup Success!") || (loginStatus && "Login Success!") || (addQuoteStatus && "Quote added Successfully!")}
+                task={
+                  (addQuoteStatus && "Quote added Successfully for verification!")|| 
+                  (signupStatus && "Signup Success!") || 
+                  (loginStatus && "Login Success!") }
+                  
                 label={"Close"}
-                showPopup={()=>{(signupStatus && showSuccessSignupPopup)||(loginStatus && showLoginSuccessPopup) || (addQuoteStatus && showAddQuoteSuccessPopup)}}
+                showPopup={()=>{(signupStatus && showSuccessSignupPopup)||
+                  (loginStatus && showLoginSuccessPopup) || 
+                  (addQuoteStatus && showAddQuoteSuccessPopup)}}
                 closePopup = {() => {
                   setShowSuccessSignupPopup(false);
                   setShowLoginSuccessPopup(false)
@@ -253,8 +269,10 @@ const Home = () => {
           <div className="home-footer-download-color">
             <DownloadImage printRef={printRef} />
             <div className="color-picker">
-              <ColorPicker sendColor = {handleGetBgColor} initialColor="#e6d084" iconLabel={<TbBackground />}/>
-              <ColorPicker sendColor={handleTextColor} initialColor="#7a1e30" iconLabel={<CiText />}/>
+              <ColorPicker sendColor = {handleGetBgColor} 
+                initialColor="#e6d084" iconLabel={<TbBackground />}/>
+              <ColorPicker sendColor={handleTextColor}
+                initialColor="#7a1e30" iconLabel={<CiText />}/>
             </div>
           </div>
         </div>

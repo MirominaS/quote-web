@@ -64,7 +64,12 @@ const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUserna
 
   return (
     <div className='login-container'>
-        <div className='login-close-btn'  onClick={()=>{closeLoginPopup(); setUsername(""); setPassword(""); setError("")}}><IoClose /></div>
+        <div className='login-close-btn'  onClick={()=>{
+            closeLoginPopup(); 
+            setUsername(""); 
+            setPassword(""); 
+            setError("")}}
+            ><IoClose /></div>
         <div className='login-title'>Log In</div>
         <div className='login-username'>
             <Input
@@ -75,7 +80,9 @@ const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUserna
                 height='35px'
                 border={error.uname && '1px solid red'}
                 value={username}
-                handleChange={(uname) => {setUsername(uname.target.value);  sendUsername(uname.target.value) }}
+                handleChange={(uname) => {
+                    setUsername(uname.target.value); 
+                    sendUsername(uname.target.value) }}
                 //
             />
             {error.uname && <span className='error-message'>{error.uname}</span>}

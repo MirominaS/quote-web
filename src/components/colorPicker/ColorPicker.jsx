@@ -58,7 +58,10 @@ const ColorPicker = ({sendColor,initialColor,iconLabel}) => {
           </div>
         ) : null}
       </div>
-      <div style={{color:"black",fontSize:'20px',paddingTop:'5px',paddingRight:'5px'}}>{iconLabel}</div>
+      <div style={
+        {color:"black",fontSize:'20px',paddingTop:'5px',paddingRight:'5px'}
+        }>{iconLabel}
+      </div>
       
     </div>
   );

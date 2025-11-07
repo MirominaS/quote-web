@@ -105,7 +105,8 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 height='35px'
                 border={error.mail && '1px solid red'}
                 value={userDetail.email}
-                handleChange={(mail) => setUserDetail(prev => ({...prev,email:mail.target.value}))}
+                handleChange={(mail) => 
+                    setUserDetail(prev => ({...prev,email:mail.target.value}))}
             />
             {error.mail && <span className='error-message'>{error.mail}</span>}
         </div>
@@ -118,7 +119,10 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 height='35px'
                 border={error.uname && '1px solid red'}
                 value={userDetail.username}
-                handleChange={(uname) => {setUserDetail(prev => ({...prev,username:uname.target.value})); sendUsername(uname.target.value)}}
+                handleChange={(uname) => {
+                    setUserDetail(prev => (
+                        {...prev,username:uname.target.value})); 
+                        sendUsername(uname.target.value)}}
             />
             {error.uname && <span className='error-message'>{error.uname}</span>}
         </div>
@@ -131,7 +135,9 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
                 height='35px'
                 border={error.pswrd && '1px solid red'}
                 value={userDetail.password}
-                handleChange={(pwrd) => setUserDetail(prev => ({...prev,password:pwrd.target.value}))}
+                handleChange={(pwrd) => 
+                    setUserDetail(prev => (
+                        {...prev,password:pwrd.target.value}))}
              />
              {error.pswrd && <span className='error-message'>{error.pswrd}</span>}
              <div className='signup-password-icon' onClick={() => setShowPassword(!showPassword)}>
