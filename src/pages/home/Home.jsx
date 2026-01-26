@@ -109,7 +109,13 @@ const Home = () => {
             index === activeIndex && (
               <Quote
                 ref={printRef}
-                style={(showSignupPopUp||showSuccessSignupPopup||showLoginPopup||showLoginSuccessPopup) ? 
+                style={(showSignupPopUp||
+                  showSuccessSignupPopup||
+                  showLoginPopup||
+                  showLoginSuccessPopup||
+                  showAddQuotePopup||
+                  showAddQuoteSuccessPopup                
+                ) ? 
                         {filter:'blur(10px)'} : 
                         {backgroundColor:`${getBgColor}`||
                         "#e6d084", color: `${getTextColor}`||

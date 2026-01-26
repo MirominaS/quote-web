@@ -7,9 +7,6 @@ export const getService = async(url) => {
     
 } 
 
-
-
-
 export const postService = async(url,body) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
