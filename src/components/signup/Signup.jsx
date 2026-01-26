@@ -6,8 +6,8 @@ import { FaEyeSlash } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { postService } from '../../utils/httpServices';
 
-
-const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLoginPopup}) => {
+ 
+const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLoginPopup,signupSuccessStatus}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [error,setError] = useState({});
     const [userDetail,setUserDetail] = useState({email:"",username:"",password:""})
@@ -15,6 +15,7 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
 
     const signupUser = async(userData) => {   
       const {success} = await postService('http://localhost:1999/quotes/user',userData)
+      return success
     }
   
 
@@ -25,29 +26,29 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
         let valid = true;
         if(!userDetail.email){
             error.mail = "Email is required"
-            setUserDetail({email:""})
+            setUserDetail(prev => ({...prev,email:""}))
             valid = false;
         }else if(!emailRegex.test(userDetail.email)){
             error.mail = "Invalid Email"
-            setUserDetail({email:""})
+            setUserDetail(prev => ({...prev,email:""}))
             valid = false;
         }
         if(!userDetail.username.trim()){
             error.uname = "Username is required"
-            setUserDetail({username:""})
+            setUserDetail(prev => ({...prev,username:""}))
             valid = false;
         }else if(userDetail.username.length < 5){
             error.uname = "Username should be atlest 6 charectors"
-            setUserDetail({username:""})
+            setUserDetail(prev => ({...prev,username:""}))
             valid = false;
         }
         if(!userDetail.password.trim()){
             error.pswrd = "Password is required"
-            setUserDetail({password:""})
+            setUserDetail(prev => ({...prev,password:""}))
             valid = false;
         }else if(userDetail.password.length < 8){
             error.pswrd = "Password should contain atleast 8 char"
-            setUserDetail({password:""})
+            setUserDetail(prev => ({...prev,password:""}))
             valid = false;
         }
         setError(error)
@@ -56,29 +57,27 @@ const Signup = ({showSignupPopUp ,  closeSignupPopUp,isSignup,sendUsername,getLo
 
     const handleValidation = async() => {
         const validate = validation()
-        let isSuccess = true
-        if(validate){
-            const userData = {
-                email:userDetail.email,
-                username:userDetail.username,
-                password:userDetail.password
-            }
-            await signupUser(userData)
-            isSignup()
-            isSuccess=true
-            setUserDetail({email:"",username:"",password:""})
-        }else{
-          validation()
-          isSuccess = false
-        }
+        if(!validate) return false
         
-        return isSuccess;
-    }
-    const sigupSuccess = () => {
-        const success = handleValidation()
+        const userData = {
+            email:userDetail.email,
+            username:userDetail.username,
+            password:userDetail.password
+        }
+        const success = await signupUser(userData)
         if(success){
-            console.log("signup success")
-            isSignup();            
+            isSignup()
+            setUserDetail({email:"",username:"",password:""})
+            return true
+        }else{
+            console.log("Signup failed from the server")
+            return false
+        }        
+    }
+    const sigupSuccess = async() => {
+        const success = await handleValidation()
+        if(success){
+            console.log("signup success")           
         }else{
             console.log("signup fail")                      
         }
