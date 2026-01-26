@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 import './AddQuote.css'
 import { Filter } from 'bad-words'
 import { IoClose } from 'react-icons/io5';
+import { postService } from '../../utils/httpServices';
 
 const AddQuote = ({showAddQuotePopup,closeAddQuotePopup,isAdd}) => {
     const [quote, setQuote] = useState("");
     const [tags, setTags] = useState([]);
     const [author, setAuthor] = useState("");
     const [filterText, setFiltertext] = useState({})
+
+    const addQuoteData = async(quoteData) => {
+        const {success} = postService('http://localhost:1999/quotes',quoteData)
+    }
 
     const filter = new Filter();
     const addValidation = () => {
@@ -48,10 +53,17 @@ const AddQuote = ({showAddQuotePopup,closeAddQuotePopup,isAdd}) => {
         return valid;
     }
 
-    const handleAddValidation = () => {
+    const handleAddValidation = async() => {
         const validate = addValidation()
         let isSuccess = true;
         if(validate){
+            const quoteData = {
+                quotes:quote,
+                quote_tags:tags,
+                quote_author:author,
+                created_by
+            }
+            await addQuoteData(quoteData)
             isSuccess=true
             setQuote("")
             setTags([])
