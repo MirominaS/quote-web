@@ -4,12 +4,17 @@ import Input from '../input/Input'
 import { IoClose } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { postService } from '../../utils/httpServices';
 
 const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUsername}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error,setError] = useState({});
+
+    const loginUser = async(userData) => {
+        return await postService("http://localhost:1999/quotes/user/login",userData)
+    }
 
     const validation = () => {
         let error = {uname:"",pswrd:""};
@@ -36,32 +41,48 @@ const Login = ({showLoginPopup,closeLoginPopup,getSignupPopup,isLogin,sendUserna
         return valid;
     }
 
-    if(!showLoginPopup) return null;
+   
 
-    const handleValidation = () => {
+    const handleValidation = async() => {
         const validate = validation()
-        let isSuccess = true
-        if(validate){
-          isSuccess=true
-          setUsername("")
-          setPassword("")
-        }else{
-          validation()
-          isSuccess = false
+        if(!validate) return false
+
+        const userData = {
+            username:username,
+            password:password
         }
-        return isSuccess;
-    }
-    const loginSuccess = () => {
-        const success = handleValidation()
+
+        const success = await loginUser(userData)
         if(success){
-            console.log("success")
-            isLogin();            
+            isLogin()
+            setUsername("")
+            setPassword("")
+            return true
+        }else{
+            console.log("Login failed from the server")
+            return false
+        }
+        // if(validate){
+        //   isSuccess=true
+        //   setUsername("")
+        //   setPassword("")
+        // }else{
+        //   validation()
+        //   isSuccess = false
+        // }
+        // return isSuccess;
+    }
+    const loginSuccess = async() => {
+        const success = await handleValidation()
+        if(success){
+            console.log("success")          
         }else{
             console.log("fail")                      
         }
     }
 
-
+    if(!showLoginPopup) return null;
+    
   return (
     <div className='login-container'>
         <div className='login-close-btn'  onClick={()=>{
